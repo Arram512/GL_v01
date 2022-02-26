@@ -1,0 +1,242 @@
+<LessonDrawer>:
+	
+	cols: 1
+
+	size_hint_y: None
+	height: 400
+
+	AsyncImage:
+		id: lesson_image
+		source: root.source
+
+	MDLabel:
+		id: lesson_description
+		text: root.description
+		size_hint_y: .2
+		font_size: 20
+		halign: 'center'
+
+<LessonsHomeWidget>:
+	cols: 1
+	height: app.window
+	size_hint_y: None
+	height: self.minimum_height
+	spacing: 20
+
+
+<LessonsMoreWidget>:
+	cols: 1
+    height: app.window
+    size_hint_y: None
+	height: self.minimum_height
+    spacing: 0
+
+	#Type code here#
+
+<TestsBackButton>:
+
+	text: 'Go back'
+	size_hint_y: None
+	height: 60
+	on_release:
+		app.tests_back_button(self)
+
+
+<LessonsBackButton>:
+
+	text: 'Go back'
+	size_hint_y: None
+	height: 60
+	on_release:
+		app.lessons_back_button(self)
+
+
+<TestsHomeWidget>:
+	
+	cols: 1
+	height: app.window
+	size_hint_y: None
+	height: self.minimum_height
+	spacing: 20
+
+
+<TestMoreWidget>:
+	cols: 1
+
+	size_hint_y: None
+	height: self.minimum_height
+	spacing: 0
+
+<LastTestWidget>:
+
+	cols:1
+
+	Button:
+		size_hint_y: .2
+		text: 'Go back'
+		on_release: app.results_back_button(self)
+
+	MDLabel:
+
+		text: root.answers
+		font_size: '200sp'
+		halign: 'center'
+		
+
+
+
+<TestDrawer>:
+	
+	cols: 1
+
+	size_hint_y: None
+	height: 400
+
+	AsyncImage:
+		source: root.source
+
+
+	GridLayout:
+		id: options_layout
+		cols: 2
+		size_hint_y: .3
+		background_disabled_normal: ''
+
+		Button: 
+			id: button_1
+			text: root.options[0]
+			on_release: app.check_answer(self, root.true_answer, root)
+
+		Button: 
+			id: button_2
+			text: root.options[1]
+			on_release: app.check_answer(self, root.true_answer, root)
+
+
+		Button: 
+			id: button_3
+			text: root.options[2]
+			on_release: app.check_answer(self, root.true_answer, root)
+
+		Button: 
+			id: button_4
+			text: root.options[3]
+			on_release: app.check_answer(self, root.true_answer, root)
+
+	Button:
+		text: 'Next'
+		on_release: app.next_button(self)
+		size_hint_y: .2
+		
+
+
+
+<RootWidget>:
+	id: manager
+
+	Screen:
+		name: 'home_screen'
+
+		MDBottomNavigation:
+			id: bottom_navigation
+
+
+
+			MDBottomNavigationItem:  							#Lessons item
+				name: 'lessons_item'
+				id: lessons_bottom_navigation_item
+				text: 'Lessons'
+
+				ScreenManager:  							#Lessons item screenmanager
+					id: lessons_screens_manager
+
+					Screen:   								#Lessons first screen
+
+						name: 'lessons_home_screen'
+						id: lessons_home_screen
+
+						ScrollView:
+							do_scroll_x: False
+							do_scroll_y: True
+
+							LessonsHomeWidget: 					#Lessons home widget
+								id: lessons_home_widget
+
+					Screen:  								#Lessons second screen
+
+						name: 'lessons_more_screen'
+						id: lessons_more_screen
+
+						ScrollView:
+							do_scroll_x: False
+							do_scroll_y: True
+
+							LessonsMoreWidget: 					#Lessons more widget
+								id: lessons_more_widget
+
+
+
+
+			MDBottomNavigationItem:
+				name: 'tests_item'
+				id: tests_bottom_navigation_item
+				text: 'Tests'
+
+				ScreenManager:
+					id: test_screens_manager
+
+					Screen:
+						name: 'tests_home_screen'
+						id: tests_home_screen
+
+						ScrollView:
+							do_scroll_x: False
+							do_scroll_y: True
+
+							TestsHomeWidget:
+
+								id: tests_home_widget
+
+
+					Screen:
+
+
+						name: 'tests_more_screen'
+						id: 'tests_more_screen'
+
+
+
+
+						ScrollView:
+
+							do_scroll_x: False
+							do_scroll_y: True
+
+							TestMoreWidget:
+								id: test_more_widget
+
+					Screen:
+
+						name: 'tests_last_screen'
+						id: tests_last_screen
+
+
+			MDBottomNavigationItem:
+				name: 'settings_item'
+				id: settings_bottom_navigation_item
+				text: 'Settings'
+
+				MDRectangleFlatIconButton:
+    				icon: "theme-light-dark"
+    				text: "Change theme"
+					pos_hint:{"top":1}
+					size_hint_x: 1
+					size_hint_y: .1
+					on_release: app.change_theme(self)
+				
+				
+
+
+RootWidget:
+
+				
