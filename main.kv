@@ -60,11 +60,12 @@
 	spacing: 20
 
 
+
 <TestMoreWidget>:
 	cols: 1
 
-	size_hint_y: None
-	height: self.minimum_height
+	# size_hint_y: None
+	# height: self.minimum_height
 	spacing: 0
 
 <LastTestWidget>:
@@ -87,10 +88,13 @@
 
 <TestDrawer>:
 	
-	cols: 1
+	orientation: 'vertical'
+	
 
-	size_hint_y: None
-	height: 400
+	MDLabel:
+		text: "True answers " + root.count
+		size_hint_y: .1
+		halign: 'center'
 
 	AsyncImage:
 		source: root.source
@@ -99,26 +103,37 @@
 	GridLayout:
 		id: options_layout
 		cols: 2
-		size_hint_y: .3
+		size_hint_y: .5
 		background_disabled_normal: ''
 
-		Button: 
+		MDRoundFlatButton:
+			size_hint_x: .5
+			size_hint_y: 1
+
 			id: button_1
 			text: root.options[0]
 			on_release: app.check_answer(self, root.true_answer, root)
 
-		Button: 
+		MDRoundFlatButton: 
+			size_hint_x: .5
+			size_hint_y: 1
+
 			id: button_2
 			text: root.options[1]
 			on_release: app.check_answer(self, root.true_answer, root)
 
 
-		Button: 
+		MDRoundFlatButton: 
+			size_hint_x: .5
+			size_hint_y: 1
 			id: button_3
 			text: root.options[2]
 			on_release: app.check_answer(self, root.true_answer, root)
 
-		Button: 
+		MDRoundFlatButton: 
+			size_hint_x: .5
+			size_hint_y: 1
+
 			id: button_4
 			text: root.options[3]
 			on_release: app.check_answer(self, root.true_answer, root)
@@ -150,7 +165,14 @@
 				ScreenManager:  							#Lessons item screenmanager
 					id: lessons_screens_manager
 
-					Screen:   								#Lessons first screen
+					Screen:   	
+					
+
+						canvas.before:
+							Color:
+								rgba: rgba('#0e1574ff')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.5*self.size[1])]							#Lessons first screen
 
 						name: 'lessons_home_screen'
 						id: lessons_home_screen
@@ -166,6 +188,7 @@
 
 						name: 'lessons_more_screen'
 						id: lessons_more_screen
+
 
 						ScrollView:
 							do_scroll_x: False

@@ -14,6 +14,7 @@ from models import get_introductions, get_description, get_name, get_sources
 from functools import partial
 import random, time
 from kivy.clock import Clock
+from kivymd.uix.label import MDLabel
 
 
 Window.size = (320, 600)
@@ -92,7 +93,7 @@ class FirstLevelCallBacks:
 
 			if len(options) == 4:
 
-				self.root.ids.test_more_widget.add_widget(TestDrawer(source = lesson_sources[iterator], options = options, true_answer = lesson_items[iterator]))
+				self.root.ids.test_more_widget.add_widget(TestDrawer(source = lesson_sources[iterator], options = options, true_answer = lesson_items[iterator], count = str(self.true_answers)))
 
 			else: 
 				print(len(options))
@@ -169,7 +170,9 @@ class TestsHomeWidget(GridLayout):
 class TestMoreWidget(GridLayout):
 	pass
 
-class TestDrawer(GridLayout):
+
+
+class TestDrawer(MDBoxLayout):
 
 
 	source = StringProperty()
@@ -177,6 +180,8 @@ class TestDrawer(GridLayout):
 	options = ListProperty()
 
 	true_answer = StringProperty()
+
+	count = StringProperty()
 
 class LastTestWidget(GridLayout):
 	answers = StringProperty()
