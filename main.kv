@@ -1,9 +1,11 @@
 <LessonDrawer>:
-	
-	cols: 1
 
-	size_hint_y: None
-	height: 400
+	orientation: 'vertical'
+
+	Button:
+		text: 'Favorite'
+		on_release: app.add_to_favorite(root)
+		size_hint_y: 0.1
 
 	AsyncImage:
 		id: lesson_image
@@ -16,6 +18,11 @@
 		font_size: 20
 		halign: 'center'
 
+	Button:
+		text: 'Next'
+		on_release: app.lesson_next_button(self)
+		size_hint_y: .2
+
 <LessonsHomeWidget>:
 	cols: 1
 	height: app.window
@@ -26,9 +33,9 @@
 
 <LessonsMoreWidget>:
 	cols: 1
-    height: app.window
-    size_hint_y: None
-	height: self.minimum_height
+    # height: app.window
+    # size_hint_y: None
+	# height: self.minimum_height
     spacing: 0
 
 	#Type code here#
@@ -44,9 +51,9 @@
 
 <LessonsBackButton>:
 
-	text: 'Go back'
-	size_hint_y: None
-	height: 60
+	text: ' '
+	icon: 'arrow-left-bold-circle'
+	size_hint_y: 0.05
 	on_release:
 		app.lessons_back_button(self)
 
@@ -140,7 +147,7 @@
 
 	Button:
 		text: 'Next'
-		on_release: app.next_button(self)
+		on_release: app.test_next_button(self)
 		size_hint_y: .2
 		
 
@@ -177,12 +184,21 @@
 						name: 'lessons_home_screen'
 						id: lessons_home_screen
 
-						ScrollView:
-							do_scroll_x: False
-							do_scroll_y: True
+						MDBoxLayout:
 
-							LessonsHomeWidget: 					#Lessons home widget
-								id: lessons_home_widget
+
+							orientation: 'vertical'
+							MDToolbar:
+								id: lessons_home_toolbar
+								size_hint_y: .1
+								text: 'Toolbar'
+
+							ScrollView:
+								do_scroll_x: False
+								do_scroll_y: True
+								
+								LessonsHomeWidget: 					#Lessons home widget
+									id: lessons_home_widget
 
 					Screen:  								#Lessons second screen
 
@@ -190,9 +206,11 @@
 						id: lessons_more_screen
 
 
-						ScrollView:
-							do_scroll_x: False
-							do_scroll_y: True
+						MDBoxLayout: 
+							orientation: 'vertical'
+
+							MDToolbar:
+								left_action_items: [["arrow-left", lambda x: app.lessons_back_button(self)]]
 
 							LessonsMoreWidget: 					#Lessons more widget
 								id: lessons_more_widget
@@ -212,6 +230,7 @@
 						name: 'tests_home_screen'
 						id: tests_home_screen
 
+
 						ScrollView:
 							do_scroll_x: False
 							do_scroll_y: True
@@ -227,16 +246,20 @@
 						name: 'tests_more_screen'
 						id: 'tests_more_screen'
 
+						MDBoxLayout:
 
+							orientation: 'vertical'	
+							
+							MDToolbar:
+								left_action_items: [["arrow-left", lambda x: app.tests_back_button(self)]]
 
+							ScrollView:
 
-						ScrollView:
+								do_scroll_x: False
+								do_scroll_y: True
 
-							do_scroll_x: False
-							do_scroll_y: True
-
-							TestMoreWidget:
-								id: test_more_widget
+								TestMoreWidget:
+									id: test_more_widget
 
 					Screen:
 
