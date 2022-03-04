@@ -2,6 +2,7 @@
 Յու բալիկներ։ Արամ ձաձյան պարապ ա ու իրա ստրուկտուրայի տարբերակն ա մշակել
 եթե տենամ դժվարանում եք, ցույց կտամ։ Բայց մեկա մինչև վերջ գրել եմ տալու, նոր կասեմ ձեզ սրա մասին ։-)
 """
+from typing import List
 from kivymd.uix.button import MDRectangleFlatIconButton
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.app import MDApp
@@ -19,27 +20,6 @@ from kivymd.uix.label import MDLabel
 
 
 Window.size = (320, 600)
-
-class ReciveFromDatabase:
-
-
-	def get_sources(self, item):
-		sources = []
-		lessons = get_introductions(item)
-		for tmp in lessons:
-			sources.append(tmp)
-
-		return sources
-
-	def get_items(self, item):
-		items = []
-		lessons = get_introductions(item)
-		for tmp in lessons:
-			items.append(lessons[tmp])
-
-		return items
-
-
 
 
 
@@ -66,7 +46,7 @@ class FirstLevelCallBacks:
 		# lesson_sources.sort()
 		# lesson_items.sort()
 		try:
-			self.root.ids.lessons_more_widget.add_widget(LessonDrawer(source = lesson_sources[iterator], description = lesson_items[iterator]))
+			self.root.ids.lessons_more_widget.add_widget(LessonDrawer(lesson_descriptions = lesson_items, lesson_sources = lesson_sources, source = lesson_sources[iterator], description = lesson_items[iterator]))
 			print(lesson_sources[iterator])
 		except:
 			self.root.ids.lessons_more_widget.clear_widgets()
@@ -74,15 +54,15 @@ class FirstLevelCallBacks:
 			self.root.ids.lessons_more_widget.add_widget(Button(text = 'End lesson'))
 
 
-	def test_next_button(self, instance):
+	def test_next_button(self,instance,  names, sources, *args, **kwargs):
 		self.iterator += 1
 		self.root.ids.test_more_widget.clear_widgets()
-		self.test_callback(instance, lesson_sources = self.sources, lesson_items = self.items, iterator = self.iterator)
+		self.test_callback(instance, lesson_sources = sources, lesson_items = names, iterator = self.iterator)
 
-	def lesson_next_button(self, instance):
+	def lesson_next_button(self, instance, lesson_sources, lesson_descriptions):
 		self.iterator += 1
 		self.root.ids.lessons_more_widget.clear_widgets()
-		self.lesson_callback(instance, lesson_sources = self.sources, lesson_items = self.descriptions, iterator = self.iterator)
+		self.lesson_callback(instance, lesson_sources = lesson_sources, lesson_items = lesson_descriptions, iterator = self.iterator)
 
 
 
@@ -93,6 +73,7 @@ class FirstLevelCallBacks:
 		
 		self.root.ids.test_screens_manager.current = 'tests_more_screen'
 		options = []
+
 
 		try:
 
@@ -108,8 +89,7 @@ class FirstLevelCallBacks:
 				options[random.randint(0, len(options) - 1)] = lesson_items[iterator]
 
 			if len(options) == 4:
-
-				self.root.ids.test_more_widget.add_widget(TestDrawer(source = lesson_sources[iterator], options = options, true_answer = lesson_items[iterator], count = str(self.true_answers)))
+				self.root.ids.test_more_widget.add_widget(TestDrawer(test_sources = lesson_sources, test_names = lesson_items, source = lesson_sources[iterator], options = options, true_answer = lesson_items[iterator], count = str(self.true_answers)))
 
 			else: 
 				print(len(options))
@@ -121,7 +101,7 @@ class FirstLevelCallBacks:
 
 
 
-	def check_answer(self, instance, true_answer, button_root):
+	def check_answer(self, instance, true_answer, button_root, names, sources):
 
 
 
@@ -132,8 +112,7 @@ class FirstLevelCallBacks:
 			self.true_answers += 1
 			instance.md_bg_color_disabled = 'green'
 			button_root.ids.options_layout.disabled = True
-
-			Clock.schedule_once(self.test_next_button, 1)
+			Clock.schedule_once(partial(self.test_next_button, instance, names, sources), 1)
 
 		else:
 
@@ -151,7 +130,7 @@ class FirstLevelCallBacks:
 
 			button_root.ids.options_layout.disabled = True
 
-			Clock.schedule_once(self.test_next_button, 1)
+			Clock.schedule_once(partial(self.test_next_button,instance,  names, sources), 1)
 
 		
 	def get_random(self, array):
@@ -183,7 +162,8 @@ class LessonsMoreWidget(GridLayout):
 	pass
 
 class LessonDrawer(MDBoxLayout):
-
+	lesson_sources = ListProperty()
+	lesson_descriptions = ListProperty()
 	source = StringProperty()
 	description = StringProperty()
 
@@ -198,6 +178,9 @@ class TestMoreWidget(GridLayout):
 
 class TestDrawer(MDBoxLayout):
 
+	test_sources = ListProperty()
+
+	test_names = ListProperty()
 
 	source = StringProperty()
 
@@ -244,15 +227,16 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 		#LESSON 2 BUTTONS
 
-		self.sources = ReciveFromDatabase().get_sources("Alphavite")
-		self.items = ReciveFromDatabase().get_items("Alphavite")
+		self.sources = get_sources("Alphavite")
+		self.items = get_description("Alphavite")
+		self.names = get_name('Alphavite')
 
 		lesson_2_button = MDRectangleFlatIconButton(text = f'Lesson 2', icon = '', size_hint = (1, 1))
 		lesson_2_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  self.sources, lesson_items = self.items))
 		self.root.ids.lessons_home_widget.add_widget(lesson_2_button)
 
 		test_2_button = MDRectangleFlatIconButton(text = 'Test 2', icon = '', size_hint = (1, 1))
-		test_2_button.bind(on_press = partial(self.test_callback, lesson_sources = self.sources, lesson_items = self.items))
+		test_2_button.bind(on_press = partial(self.test_callback, lesson_sources = self.sources, lesson_items = self.names))
 		self.root.ids.tests_home_widget.add_widget(test_2_button)
 
 		# lesson_3_button = MDRectangleFlatIconButton(text = f'Lesson 3', size_hint = (1, 1), font_size = 40)

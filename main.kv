@@ -21,7 +21,7 @@
 
 	Button:
 		text: 'Next'
-		on_release: app.lesson_next_button(self)
+		on_release: app.lesson_next_button(self, root.lesson_sources, root.lesson_descriptions)
 		size_hint_y: .2
 
 <LessonsHomeWidget>:
@@ -120,7 +120,7 @@
 			id: button_1
 			font_name: app.font_name
 			text: root.options[0]
-			on_release: app.check_answer(self, root.true_answer, root)
+			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
 
 		MDRoundFlatButton: 
 			size_hint_x: .5
@@ -128,7 +128,7 @@
 			id: button_2
 			font_name: app.font_name
 			text: root.options[1]
-			on_release: app.check_answer(self, root.true_answer, root)
+			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
 
 
 		MDRoundFlatButton: 
@@ -137,7 +137,7 @@
 			id: button_3
 			font_name: app.font_name
 			text: root.options[2]
-			on_release: app.check_answer(self, root.true_answer, root)
+			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
 
 		MDRoundFlatButton: 
 			size_hint_x: .5
@@ -145,12 +145,12 @@
 			id: button_4
 			font_name: app.font_name
 			text: root.options[3]
-			on_release: app.check_answer(self, root.true_answer, root)
+			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
 
 	MDRoundFlatButton:
 		text: 'Next'
 		md_bg_color_disabled : 'red'
-		on_release: app.test_next_button(self)
+		on_release: app.test_next_button(self, root.test_names, root.test_sources)
 		size_hint_y: .2
 		
 
