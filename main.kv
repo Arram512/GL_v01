@@ -14,6 +14,7 @@
 	MDLabel:
 		id: lesson_description
 		text: root.description
+		font_name: app.font_name
 		size_hint_y: .2
 		font_size: 20
 		halign: 'center'
@@ -76,13 +77,12 @@
 	spacing: 0
 
 <LastTestWidget>:
+ 
+	orientation: 'vertical'
 
-	cols:1
+	MDToolbar:
+		left_action_items: [["arrow-left", lambda x: app.tests_back_button(self)]]
 
-	Button:
-		size_hint_y: .2
-		text: 'Go back'
-		on_release: app.results_back_button(self)
 
 	MDLabel:
 
@@ -104,6 +104,7 @@
 		halign: 'center'
 
 	AsyncImage:
+		id: test_image
 		source: root.source
 
 
@@ -116,16 +117,16 @@
 		MDRoundFlatButton:
 			size_hint_x: .5
 			size_hint_y: 1
-
 			id: button_1
+			font_name: app.font_name
 			text: root.options[0]
 			on_release: app.check_answer(self, root.true_answer, root)
 
 		MDRoundFlatButton: 
 			size_hint_x: .5
 			size_hint_y: 1
-
 			id: button_2
+			font_name: app.font_name
 			text: root.options[1]
 			on_release: app.check_answer(self, root.true_answer, root)
 
@@ -134,19 +135,21 @@
 			size_hint_x: .5
 			size_hint_y: 1
 			id: button_3
+			font_name: app.font_name
 			text: root.options[2]
 			on_release: app.check_answer(self, root.true_answer, root)
 
 		MDRoundFlatButton: 
 			size_hint_x: .5
 			size_hint_y: 1
-
 			id: button_4
+			font_name: app.font_name
 			text: root.options[3]
 			on_release: app.check_answer(self, root.true_answer, root)
 
-	Button:
+	MDRoundFlatButton:
 		text: 'Next'
+		md_bg_color_disabled : 'red'
 		on_release: app.test_next_button(self)
 		size_hint_y: .2
 		

@@ -63,10 +63,11 @@ class FirstLevelCallBacks:
 
 		self.root.ids.lessons_screens_manager.current = 'lessons_more_screen'
 		#self.root.ids.lessons_more_toolbar.add_widget(LessonsBackButton())
-		lesson_sources.sort()
-		lesson_items.sort()
+		# lesson_sources.sort()
+		# lesson_items.sort()
 		try:
 			self.root.ids.lessons_more_widget.add_widget(LessonDrawer(source = lesson_sources[iterator], description = lesson_items[iterator]))
+			print(lesson_sources[iterator])
 		except:
 			self.root.ids.lessons_more_widget.clear_widgets()
 			self.iterator = 0
@@ -87,8 +88,8 @@ class FirstLevelCallBacks:
 
 	def test_callback(self,instance, lesson_sources, lesson_items, iterator = 0):
 
-		lesson_sources.sort()
-		lesson_items.sort()
+		# lesson_sources.sort()
+		# lesson_items.sort()
 		
 		self.root.ids.test_screens_manager.current = 'tests_more_screen'
 		options = []
@@ -122,18 +123,32 @@ class FirstLevelCallBacks:
 
 	def check_answer(self, instance, true_answer, button_root):
 
+
+
 		
 		if instance.text == true_answer:
 			print('True Answer!')
+			print(button_root.ids.test_image.source)
 			self.true_answers += 1
+			instance.md_bg_color_disabled = 'green'
 			button_root.ids.options_layout.disabled = True
-			instance.background_color = 'green'
+
 			Clock.schedule_once(self.test_next_button, 1)
 
 		else:
 
 			print('False answer')
-			instance.background_color = 'red'
+			instance.md_bg_color_disabled = 'red'
+
+			if button_root.ids.button_1.text == true_answer:
+				button_root.ids.button_1.md_bg_color_disabled = 'green'
+			elif button_root.ids.button_2.text == true_answer:
+				button_root.ids.button_2.md_bg_color_disabled = 'green'
+			elif button_root.ids.button_3.text == true_answer:
+				button_root.ids.button_3.md_bg_color_disabled = 'green'
+			elif button_root.ids.button_4.text == true_answer:
+				button_root.ids.button_4.md_bg_color_disabled = 'green'
+
 			button_root.ids.options_layout.disabled = True
 
 			Clock.schedule_once(self.test_next_button, 1)
@@ -146,20 +161,17 @@ class FirstLevelCallBacks:
 	def tests_back_button(self, instance):
 		self.iterator = 0
 		self.true_answers = 0
+		self.root.ids.tests_last_screen.clear_widgets()
+
 		self.root.ids.test_more_widget.clear_widgets()
 		self.root.ids.test_screens_manager.current = "tests_home_screen"
 
 	def lessons_back_button(self, instance):
 		self.iterator = 0
 		self.root.ids.lessons_more_widget.clear_widgets()
+
 		self.root.ids.lessons_screens_manager.current = 'lessons_home_screen'
 
-	def results_back_button(self, instance):
-
-		self.true_answers = 0
-		self.iterator = 0
-		self.root.ids.tests_last_screen.clear_widgets()
-		self.root.ids.test_screens_manager.current = 'tests_home_screen'
 
 
 
@@ -195,7 +207,7 @@ class TestDrawer(MDBoxLayout):
 
 	count = StringProperty()
 
-class LastTestWidget(GridLayout):
+class LastTestWidget(MDBoxLayout):
 	answers = StringProperty()
 
 
@@ -208,6 +220,8 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 	window = Window.size[1]
 
+	font_name = './FreeSans.ttf'
+
 
 	def on_start(self):
 
@@ -215,9 +229,9 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 		#LESSON 1 BUTTONS
 
-		self.sources = get_sources()
-		self.descriptions = get_description()
-		self.names = get_name()
+		self.sources = get_sources('Alphavite')
+		self.descriptions = get_description('Alphavite')
+		self.names = get_name('Alphavite')
 
 		lesson_1_button = MDRectangleFlatIconButton(text = f'Lesson 1', icon = '', size_hint = (1, 1))
 		lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  self.sources, lesson_items = self.descriptions))

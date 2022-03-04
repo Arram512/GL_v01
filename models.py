@@ -15,8 +15,8 @@ def get_introductions(item):
 db = sqlite3.connect('app.db')
 cursor = db.cursor()
 
-def get_description():
-    query = "SELECT description FROM gestures where part = 'Images/Alphavite/'"
+def get_description(folder):
+    query = "SELECT description FROM gestures where part = 'Images/{}/'".format(folder)
 
     data = cursor.execute(query).fetchall()
 
@@ -24,9 +24,9 @@ def get_description():
 
     return descriptions
 
-def get_name():
+def get_name(folder):
 
-    query = "SELECT name FROM gestures where part = 'Images/Alphavite/'"
+    query = "SELECT name FROM gestures where part = 'Images/{}/'".format(folder)
 
     data = cursor.execute(query).fetchall()
 
@@ -34,9 +34,9 @@ def get_name():
 
     return names
 
-def get_sources():
+def get_sources(folder):
 
-    query = "SELECT gif FROM gestures where part = 'Images/Alphavite/'"
+    query = "SELECT gif FROM gestures where part = 'Images/{}/'".format(folder)
 
     data = cursor.execute(query).fetchall()
 
