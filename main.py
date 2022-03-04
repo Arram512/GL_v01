@@ -2,7 +2,8 @@
 Յու բալիկներ։ Արամ ձաձյան պարապ ա ու իրա ստրուկտուրայի տարբերակն ա մշակել
 եթե տենամ դժվարանում եք, ցույց կտամ։ Բայց մեկա մինչև վերջ գրել եմ տալու, նոր կասեմ ձեզ սրա մասին ։-)
 """
-from typing import List
+
+from kivymd.uix.dialog.dialog import MDDialog
 from kivymd.uix.button import MDRectangleFlatIconButton
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.app import MDApp
@@ -25,12 +26,18 @@ Window.size = (320, 600)
 
 class FirstLevelCallBacks:
 
-	iterator = 0
 	true_answers = 0
 
 	def add_to_favorite(self, instance):
 		print(instance.source)
 		print(instance.description)
+
+	def favorite_callback(self, sources, names, descriptions, iterator = 0):
+		try:
+			self.root.ids.favorites_bottom_navigation_item.clear_widgets()
+			self.root.ids.favorites_bottom_navigation_item.add_widget(FavoritesDrawer(iterator = iterator, names = names, sources = sources, descriptions = descriptions, name = names[iterator], source = sources[iterator], description = descriptions[iterator]))
+		except IndexError:
+			print('index out of range')
 
 	def change_theme(self, instance):
 
@@ -42,36 +49,28 @@ class FirstLevelCallBacks:
 	def lesson_callback(self, instance, lesson_sources, lesson_items, iterator = 0):
 
 		self.root.ids.lessons_screens_manager.current = 'lessons_more_screen'
-		#self.root.ids.lessons_more_toolbar.add_widget(LessonsBackButton())
-		# lesson_sources.sort()
-		# lesson_items.sort()
-		try:
-			self.root.ids.lessons_more_widget.add_widget(LessonDrawer(lesson_descriptions = lesson_items, lesson_sources = lesson_sources, source = lesson_sources[iterator], description = lesson_items[iterator]))
-			print(lesson_sources[iterator])
-		except:
-			self.root.ids.lessons_more_widget.clear_widgets()
-			self.iterator = 0
-			self.root.ids.lessons_more_widget.add_widget(Button(text = 'End lesson'))
-
-
-	def test_next_button(self,instance,  names, sources, *args, **kwargs):
-		self.iterator += 1
-		self.root.ids.test_more_widget.clear_widgets()
-		self.test_callback(instance, lesson_sources = sources, lesson_items = names, iterator = self.iterator)
-
-	def lesson_next_button(self, instance, lesson_sources, lesson_descriptions):
-		self.iterator += 1
 		self.root.ids.lessons_more_widget.clear_widgets()
-		self.lesson_callback(instance, lesson_sources = lesson_sources, lesson_items = lesson_descriptions, iterator = self.iterator)
+
+		try:
+			if iterator >= 0:
+				self.root.ids.lessons_more_widget.add_widget(LessonDrawer(iterator = iterator, lesson_descriptions = lesson_items, lesson_sources = lesson_sources, source = lesson_sources[iterator], description = lesson_items[iterator]))
+				print(lesson_sources[iterator])
+			else:
+				pass
+		except:
+			if iterator >= len(lesson_sources):
+				self.root.ids.lessons_more_widget.clear_widgets()
+				self.root.ids.lessons_more_widget.add_widget(Button(text = 'End lesson'))
 
 
 
-	def test_callback(self,instance, lesson_sources, lesson_items, iterator = 0):
 
-		# lesson_sources.sort()
-		# lesson_items.sort()
+	def test_callback(self,instance, lesson_sources, lesson_items,  iterator = 0, *args, **kwargs):
+
 		
 		self.root.ids.test_screens_manager.current = 'tests_more_screen'
+		self.root.ids.test_more_widget.clear_widgets()
+
 		options = []
 
 
@@ -89,7 +88,7 @@ class FirstLevelCallBacks:
 				options[random.randint(0, len(options) - 1)] = lesson_items[iterator]
 
 			if len(options) == 4:
-				self.root.ids.test_more_widget.add_widget(TestDrawer(test_sources = lesson_sources, test_names = lesson_items, source = lesson_sources[iterator], options = options, true_answer = lesson_items[iterator], count = str(self.true_answers)))
+				self.root.ids.test_more_widget.add_widget(TestDrawer( iterator = iterator, test_sources = lesson_sources, test_names = lesson_items, source = lesson_sources[iterator], options = options, true_answer = lesson_items[iterator], count = str(self.true_answers)))
 
 			else: 
 				print(len(options))
@@ -104,15 +103,13 @@ class FirstLevelCallBacks:
 	def check_answer(self, instance, true_answer, button_root, names, sources):
 
 
-
 		
 		if instance.text == true_answer:
-			print('True Answer!')
 			print(button_root.ids.test_image.source)
 			self.true_answers += 1
 			instance.md_bg_color_disabled = 'green'
 			button_root.ids.options_layout.disabled = True
-			Clock.schedule_once(partial(self.test_next_button, instance, names, sources), 1)
+			Clock.schedule_once(partial(self.test_callback, instance, sources, names, button_root.iterator + 1), 1) #breakpoint 
 
 		else:
 
@@ -130,7 +127,7 @@ class FirstLevelCallBacks:
 
 			button_root.ids.options_layout.disabled = True
 
-			Clock.schedule_once(partial(self.test_next_button,instance,  names, sources), 1)
+			Clock.schedule_once(partial(self.test_callback, instance, sources, names, button_root.iterator + 1), 1) #breakpoint 
 
 		
 	def get_random(self, array):
@@ -138,7 +135,7 @@ class FirstLevelCallBacks:
 		return random.randint(0, len(array))
 
 	def tests_back_button(self, instance):
-		self.iterator = 0
+
 		self.true_answers = 0
 		self.root.ids.tests_last_screen.clear_widgets()
 
@@ -146,7 +143,7 @@ class FirstLevelCallBacks:
 		self.root.ids.test_screens_manager.current = "tests_home_screen"
 
 	def lessons_back_button(self, instance):
-		self.iterator = 0
+
 		self.root.ids.lessons_more_widget.clear_widgets()
 
 		self.root.ids.lessons_screens_manager.current = 'lessons_home_screen'
@@ -162,6 +159,9 @@ class LessonsMoreWidget(GridLayout):
 	pass
 
 class LessonDrawer(MDBoxLayout):
+
+	iterator = NumericProperty()
+
 	lesson_sources = ListProperty()
 	lesson_descriptions = ListProperty()
 	source = StringProperty()
@@ -178,6 +178,9 @@ class TestMoreWidget(GridLayout):
 
 class TestDrawer(MDBoxLayout):
 
+
+	iterator = NumericProperty()
+
 	test_sources = ListProperty()
 
 	test_names = ListProperty()
@@ -193,6 +196,18 @@ class TestDrawer(MDBoxLayout):
 class LastTestWidget(MDBoxLayout):
 	answers = StringProperty()
 
+
+class FavoritesDrawer(MDBoxLayout):
+
+	iterator = NumericProperty()
+
+	names = ListProperty()
+	sources = ListProperty()
+	descriptions = ListProperty()
+
+	name = StringProperty()
+	source = StringProperty()
+	description = StringProperty()
 
 
 class RootWidget(ScreenManager):
@@ -216,6 +231,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 		self.descriptions = get_description('Alphavite')
 		self.names = get_name('Alphavite')
 
+
 		lesson_1_button = MDRectangleFlatIconButton(text = f'Lesson 1', icon = '', size_hint = (1, 1))
 		lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  self.sources, lesson_items = self.descriptions))
 		self.root.ids.lessons_home_widget.add_widget(lesson_1_button)
@@ -223,6 +239,10 @@ class MainApp(MDApp, FirstLevelCallBacks):
 		test_1_button = MDRectangleFlatIconButton(text = 'Test 1', icon = '' ,size_hint = (1, 1))
 		test_1_button.bind(on_press = partial(self.test_callback, lesson_sources = self.sources, lesson_items = self.names))
 		self.root.ids.tests_home_widget.add_widget(test_1_button)
+
+		self.root.ids.favorites_toolbar.ids.label_title.font_name = self.root.ids.tests_more_screen_toolbar.ids.label_title.font_name = self.font_name
+
+		self.favorite_callback(names = self.names, descriptions= self.descriptions, sources= self.sources)
 
 
 		#LESSON 2 BUTTONS

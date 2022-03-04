@@ -19,10 +19,22 @@
 		font_size: 20
 		halign: 'center'
 
-	Button:
-		text: 'Next'
-		on_release: app.lesson_next_button(self, root.lesson_sources, root.lesson_descriptions)
-		size_hint_y: .2
+	MDBoxLayout:
+		orientation: 'horizontal'
+
+		MDRoundFlatButton:
+			font_name: app.font_name
+			text: 'Նախորդը'
+			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.iterator - 1)
+			size_hint_y: .2
+			size_hint_x: .5
+			
+		MDRoundFlatButton:
+			font_name: app.font_name
+			text: 'Հաջորդը'
+			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.iterator + 1)
+			size_hint_y: .2
+			size_hint_x: .5
 
 <LessonsHomeWidget>:
 	cols: 1
@@ -148,11 +160,43 @@
 			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
 
 	MDRoundFlatButton:
-		text: 'Next'
-		md_bg_color_disabled : 'red'
-		on_release: app.test_next_button(self, root.test_names, root.test_sources)
+		font_name: app.font_name
+		text: 'Հաջորդը'
+		on_release: app.test_callback(self, root.test_sources, root.test_names, root.iterator + 1)
 		size_hint_y: .2
-		
+		size_hint_x: 1
+
+
+<FavoritesDrawer>:
+
+	orientation: 'vertical'
+
+	AsyncImage:
+		id: favorite_image
+		source: root.source
+	MDLabel:
+		id: favorite_name
+		font_name: app.font_name
+		text: root.name + '\n'+ '\n' + root.description
+
+	MDBoxLayout:
+		orientation: 'horizontal'
+
+
+		MDRectangleFlatButton:
+			font_name: app.font_name
+			text: 'Նախորդը'
+			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root.iterator - 1)
+			size_hint_y: .3
+			size_hint_x: .5
+
+		MDRectangleFlatButton:
+			font_name: app.font_name
+			text: 'Հաջորդը'
+			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root.iterator + 1)
+			size_hint_y: .3
+			size_hint_x: .5
+
 
 
 
@@ -254,6 +298,8 @@
 							orientation: 'vertical'	
 							
 							MDToolbar:
+								id: tests_more_screen_toolbar
+								title: 'Թեստեր'
 								left_action_items: [["arrow-left", lambda x: app.tests_back_button(self)]]
 
 							ScrollView:
@@ -269,6 +315,21 @@
 						name: 'tests_last_screen'
 						id: tests_last_screen
 
+
+			MDBottomNavigationItem:
+				name: 'favorites_item'
+				#id: favorites_bottom_navigation_item
+				text: 'Favorites'
+
+				MDBoxLayout:
+					orientation: 'vertical'
+					
+					MDToolbar:
+						id: favorites_toolbar
+						title: 'Ֆավորիտներ'
+
+					MDBoxLayout:
+						id: favorites_bottom_navigation_item
 
 			MDBottomNavigationItem:
 				name: 'settings_item'
