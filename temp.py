@@ -7,19 +7,20 @@ cursor = db.cursor()
 
 
 
-parts = ['Images/Intro', 'Images/Alphavite/']
+parts = ['Images/Intro', 'Images/Alphavite/', 'Images/Ashxarh/']
 
 descs = ['adrbejan description', 'agah description', 'akumb description', 'albania description', 'amis description']
 
 names = []
 gifs = []
-for i in os.listdir(parts[1]):
+for i in os.listdir(parts[2]):
     names.append(i.replace('.gif', ''))
-    gifs.append(parts[1] + i)
+    gifs.append(parts[2] + i)
 
+print(names, gifs)
 
-for i in range(len(descs)):
-    query = f"INSERT INTO gestures(part, name, description, gif) VALUES ('{parts[1]}', '{names[i]}', '{descs[i]}', '{gifs[i]}')"
+for i in range(len(names)):
+    query = f"INSERT INTO gestures(part, name, description, gif) VALUES ('{parts[2]}', '{names[i]}', 'Նկարագրություն', '{gifs[i]}')"
     cursor.execute(query)
 db.commit()
 

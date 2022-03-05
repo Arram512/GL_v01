@@ -307,9 +307,11 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 		#LESSON 2 BUTTONS
 
-		self.sources = get_sources("Alphavite")
-		self.items = get_description("Alphavite")
-		self.names = get_name('Alphavite')
+		self.sources = get_sources("Ashxarh")
+		self.items = get_description("Ashxarh")
+		self.names = get_name('Ashxarh')
+
+		print(self.sources, self.items, self.names)
 
 		lesson_2_button = MDRectangleFlatIconButton(text = f'Lesson 2', icon = '', size_hint = (1, 1))
 		lesson_2_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  self.sources, lesson_items = self.items, lesson_names = self.names))
