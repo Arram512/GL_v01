@@ -3,6 +3,7 @@
 եթե տենամ դժվարանում եք, ցույց կտամ։ Բայց մեկա մինչև վերջ գրել եմ տալու, նոր կասեմ ձեզ սրա մասին ։-)
 """
 
+from typing import List
 from kivymd.uix.dialog.dialog import MDDialog
 from kivymd.uix.button import MDRectangleFlatIconButton
 from kivymd.uix.button import MDRectangleFlatButton
@@ -13,7 +14,7 @@ from kivy.uix.button import Button
 from kivy.properties import StringProperty, ObjectProperty, ListProperty, NumericProperty, Property
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
-from models import get_introductions, get_description, get_name, get_sources
+from models import get_introductions, get_description, get_name, get_sources, add_to_favorites, get_from_favorites
 from functools import partial
 import random, time
 from kivy.clock import Clock
@@ -28,9 +29,17 @@ class FirstLevelCallBacks:
 
 	true_answers = 0
 
+	
+	def filling_favorites(self):
+
+		self.favorite_callback(names = get_from_favorites()[0], descriptions= get_from_favorites()[2], sources= get_from_favorites()[1])
+
+
+
 	def add_to_favorite(self, instance):
-		print(instance.source)
-		print(instance.description)
+		
+		add_to_favorites(name = instance.name, source = instance.source, description= instance.description)
+		self.filling_favorites()
 
 	def favorite_callback(self, sources, names, descriptions, iterator = 0):
 		try:
@@ -46,14 +55,14 @@ class FirstLevelCallBacks:
 		else:
 			self.theme_cls.theme_style = "Dark"
 
-	def lesson_callback(self, instance, lesson_sources, lesson_items, iterator = 0):
+	def lesson_callback(self, instance, lesson_sources, lesson_items, lesson_names, iterator = 0):
 
 		self.root.ids.lessons_screens_manager.current = 'lessons_more_screen'
 		self.root.ids.lessons_more_widget.clear_widgets()
 
 		try:
 			if iterator >= 0:
-				self.root.ids.lessons_more_widget.add_widget(LessonDrawer(iterator = iterator, lesson_descriptions = lesson_items, lesson_sources = lesson_sources, source = lesson_sources[iterator], description = lesson_items[iterator]))
+				self.root.ids.lessons_more_widget.add_widget(LessonDrawer(iterator = iterator, lesson_names = lesson_names, lesson_descriptions = lesson_items, lesson_sources = lesson_sources, name = lesson_names[iterator],source = lesson_sources[iterator], description = lesson_items[iterator]))
 				print(lesson_sources[iterator])
 			else:
 				pass
@@ -162,10 +171,13 @@ class LessonDrawer(MDBoxLayout):
 
 	iterator = NumericProperty()
 
+
+	lesson_names = ListProperty()
 	lesson_sources = ListProperty()
 	lesson_descriptions = ListProperty()
 	source = StringProperty()
 	description = StringProperty()
+	name = StringProperty()
 
 
 class TestsHomeWidget(GridLayout):
@@ -216,6 +228,7 @@ class RootWidget(ScreenManager):
 
 class MainApp(MDApp, FirstLevelCallBacks):
 
+
 	window = Window.size[1]
 
 	font_name = './FreeSans.ttf'
@@ -225,6 +238,10 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 		# Ստեղ լցնում ենք կնոպկեքը, խոսքը համ դասերի մասին ա, համ թեստերի և այլն
 
+
+		self.filling_favorites()
+
+
 		#LESSON 1 BUTTONS
 
 		self.sources = get_sources('Alphavite')
@@ -233,7 +250,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 
 		lesson_1_button = MDRectangleFlatIconButton(text = f'Lesson 1', icon = '', size_hint = (1, 1))
-		lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  self.sources, lesson_items = self.descriptions))
+		lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  self.sources, lesson_items = self.descriptions, lesson_names = self.names))
 		self.root.ids.lessons_home_widget.add_widget(lesson_1_button)
 
 		test_1_button = MDRectangleFlatIconButton(text = 'Test 1', icon = '' ,size_hint = (1, 1))
@@ -241,8 +258,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 		self.root.ids.tests_home_widget.add_widget(test_1_button)
 
 		self.root.ids.favorites_toolbar.ids.label_title.font_name = self.root.ids.tests_more_screen_toolbar.ids.label_title.font_name = self.font_name
-
-		self.favorite_callback(names = self.names, descriptions= self.descriptions, sources= self.sources)
+		#breakpoint
 
 
 		#LESSON 2 BUTTONS
@@ -319,6 +335,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 
 		##################################################################################################################
+
 
 
 	def build(self):

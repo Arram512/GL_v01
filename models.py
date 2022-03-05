@@ -49,6 +49,38 @@ def get_sources(folder):
     return sources
 
 
+def add_to_favorites(name, source, description):
+
+    query = " INSERT INTO favorites (name, source, description) VALUES ('{}', '{}', '{}') ".format(name, source, description)
+    cursor.execute(query)
+    db.commit()
+
+    print(name, source, description)
+
+def get_from_favorites():
+
+    query = "SELECT * FROM favorites"
+    data = cursor.execute(query).fetchall()
+    
+    favorite_names = []
+    favorite_sources = []
+    favorite_descriptions = []
+
+    for i in range(len(data)):
+        
+        favorite_names.append(data[i][1])
+        favorite_sources.append(data[i][2])
+        favorite_descriptions.append(data[i][3])
+
+    return favorite_names, favorite_sources, favorite_descriptions
+
+
+
+
+
+
+
+
     
 
 
