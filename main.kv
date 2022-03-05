@@ -25,16 +25,18 @@
 		orientation: 'horizontal'
 
 		MDRoundFlatButton:
+			id: lesson_previouse_button
 			font_name: app.font_name
 			text: 'Նախորդը'
-			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root.iterator - 1)
+			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root , root.iterator - 1)
 			size_hint_y: .2
 			size_hint_x: .5
 			
 		MDRoundFlatButton:
+			id: lesson_next_button
 			font_name: app.font_name
 			text: 'Հաջորդը'
-			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names,  root.iterator + 1)
+			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names, root,  root.iterator + 1)
 			size_hint_y: .2
 			size_hint_x: .5
 
@@ -186,16 +188,19 @@
 
 
 		MDRectangleFlatButton:
+			id: favorite_previouse_button
 			font_name: app.font_name
 			text: 'Նախորդը'
-			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root.iterator - 1)
+			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator - 1)
 			size_hint_y: .3
 			size_hint_x: .5
 
 		MDRectangleFlatButton:
+
+			id: favorite_next_button
 			font_name: app.font_name
 			text: 'Հաջորդը'
-			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root.iterator + 1)
+			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator + 1)
 			size_hint_y: .3
 			size_hint_x: .5
 
@@ -323,15 +328,52 @@
 				#id: favorites_bottom_navigation_item
 				text: 'Favorites'
 
-				MDBoxLayout:
-					orientation: 'vertical'
-					
-					MDToolbar:
-						id: favorites_toolbar
-						title: 'Ֆավորիտներ'
 
-					MDBoxLayout:
-						id: favorites_bottom_navigation_item
+				ScreenManager:
+
+					id: favorites_screens_manager
+
+					Screen:
+
+						name: 'favorites_home_screen'
+						id: favorites_home_screen
+
+						
+						MDBoxLayout:
+							orientation: 'vertical'
+							
+							MDToolbar:
+								id: favorites_home_toolbar
+								title: 'Ֆավորիտներ'
+						
+							ScrollView:
+								do_scroll_x: False
+								do_scroll_y: True
+
+								GridLayout:
+									id: favorites_home_widget
+									cols: 1
+									size_hint_y: None
+									height: root.height
+					
+					Screen:
+
+						name: 'favorites_more_screen'
+						id: favorites_more_screen
+
+						
+						MDBoxLayout:
+							orientation: 'vertical'
+							
+							MDToolbar:
+								id: favorites_more_toolbar
+								title: 'Ֆավորիտներ'
+								left_action_items: [["arrow-left", lambda x: app.favorites_back_button()]]
+
+
+							MDBoxLayout:
+								id: favorites_more_widget
+								orientation: 'vertical'
 
 			MDBottomNavigationItem:
 				name: 'settings_item'

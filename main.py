@@ -3,6 +3,7 @@
 եթե տենամ դժվարանում եք, ցույց կտամ։ Բայց մեկա մինչև վերջ գրել եմ տալու, նոր կասեմ ձեզ սրա մասին ։-)
 """
 
+from email import iterators
 from typing import List
 from kivymd.uix.dialog.dialog import MDDialog
 from kivymd.uix.button import MDRectangleFlatIconButton
@@ -32,20 +33,48 @@ class FirstLevelCallBacks:
 	
 	def filling_favorites(self):
 
-		self.favorite_callback(names = get_from_favorites()[0], descriptions= get_from_favorites()[2], sources= get_from_favorites()[1])
+		self.root.ids.favorites_home_widget.clear_widgets()
+
+
+		self.favorite_gestures_list(names = get_from_favorites()[0], descriptions= get_from_favorites()[2], sources= get_from_favorites()[1])
 
 
 
 	def add_to_favorite(self, instance):
-		
-		add_to_favorites(name = instance.name, source = instance.source, description= instance.description)
-		self.filling_favorites()
 
-	def favorite_callback(self, sources, names, descriptions, iterator = 0):
+		names = get_from_favorites()[0]
+		if instance.name not in names:
+			add_to_favorites(name = instance.name, source = instance.source, description= instance.description)
+			self.filling_favorites()
+		else:
+			pass
+
+	def favorite_gestures_list(self, sources, names, descriptions):
+
+		self.root.ids.favorites_screens_manager.current = 'favorites_home_screen'
+
+
+		for i in range(len(names)):
+			temp = MDRectangleFlatButton(text = names[i], font_name = MainApp().font_name, size_hint = (1,1))
+			temp.bind(on_press = partial(self.favorite_callback, sources , names,  descriptions, iterator = i))
+			self.root.ids.favorites_home_widget.add_widget(temp)
+
+
+	def favorite_callback(self, sources, names, descriptions, root = ObjectProperty(), iterator = 0):
+
+		self.root.ids.favorites_screens_manager.current = 'favorites_more_screen'
+
 		try:
-			self.root.ids.favorites_bottom_navigation_item.clear_widgets()
-			self.root.ids.favorites_bottom_navigation_item.add_widget(FavoritesDrawer(iterator = iterator, names = names, sources = sources, descriptions = descriptions, name = names[iterator], source = sources[iterator], description = descriptions[iterator]))
-		except IndexError:
+			if iterator < 0:
+				root.ids.favorite_previouse_button.disabled = True
+			elif iterator >= 0 and iterator < len(names):
+				self.root.ids.favorites_more_widget.clear_widgets()
+				self.root.ids.favorites_more_widget.add_widget(FavoritesDrawer(iterator = iterator, names = names, sources = sources, descriptions = descriptions, name = names[iterator], source = sources[iterator], description = descriptions[iterator]))
+			elif iterator>= len(names):
+				root.ids.favorite_next_button.disabled = True
+
+
+		except:
 			print('index out of range')
 
 	def change_theme(self, instance):
@@ -55,22 +84,27 @@ class FirstLevelCallBacks:
 		else:
 			self.theme_cls.theme_style = "Dark"
 
-	def lesson_callback(self, instance, lesson_sources, lesson_items, lesson_names, iterator = 0):
+	def lesson_callback(self, instance, lesson_sources, lesson_items, lesson_names, root = ObjectProperty(), iterator = 0):
 
 		self.root.ids.lessons_screens_manager.current = 'lessons_more_screen'
-		self.root.ids.lessons_more_widget.clear_widgets()
 
 		try:
-			if iterator >= 0:
-				self.root.ids.lessons_more_widget.add_widget(LessonDrawer(iterator = iterator, lesson_names = lesson_names, lesson_descriptions = lesson_items, lesson_sources = lesson_sources, name = lesson_names[iterator],source = lesson_sources[iterator], description = lesson_items[iterator]))
-				print(lesson_sources[iterator])
-			else:
-				pass
-		except:
-			if iterator >= len(lesson_sources):
-				self.root.ids.lessons_more_widget.clear_widgets()
-				self.root.ids.lessons_more_widget.add_widget(Button(text = 'End lesson'))
 
+			if iterator < 0:
+				root.ids.lesson_previouse_button.disabled = True
+
+			elif iterator >= 0 and iterator < len(lesson_names):
+
+				self.root.ids.lessons_more_widget.clear_widgets()
+				self.root.ids.lessons_more_widget.add_widget(LessonDrawer(iterator = iterator, lesson_names = lesson_names, lesson_descriptions = lesson_items, lesson_sources = lesson_sources, name = lesson_names[iterator],source = lesson_sources[iterator], description = lesson_items[iterator]))
+
+			elif iterator>= len(lesson_names):
+				root.ids.lesson_next_button.disabled = True
+
+		except Exception as ex:
+
+			print(ex)
+			
 
 
 
@@ -156,6 +190,10 @@ class FirstLevelCallBacks:
 		self.root.ids.lessons_more_widget.clear_widgets()
 
 		self.root.ids.lessons_screens_manager.current = 'lessons_home_screen'
+
+	def favorites_back_button(self):
+
+		self.root.ids.favorites_screens_manager.current = 'favorites_home_screen'
 
 
 
@@ -257,7 +295,9 @@ class MainApp(MDApp, FirstLevelCallBacks):
 		test_1_button.bind(on_press = partial(self.test_callback, lesson_sources = self.sources, lesson_items = self.names))
 		self.root.ids.tests_home_widget.add_widget(test_1_button)
 
-		self.root.ids.favorites_toolbar.ids.label_title.font_name = self.root.ids.tests_more_screen_toolbar.ids.label_title.font_name = self.font_name
+		self.root.ids.favorites_home_toolbar.ids.label_title.font_name = self.font_name
+		self.root.ids.favorites_more_toolbar.ids.label_title.font_name = self.font_name
+		self.root.ids.tests_more_screen_toolbar.ids.label_title.font_name = self.font_name
 		#breakpoint
 
 
@@ -268,7 +308,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 		self.names = get_name('Alphavite')
 
 		lesson_2_button = MDRectangleFlatIconButton(text = f'Lesson 2', icon = '', size_hint = (1, 1))
-		lesson_2_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  self.sources, lesson_items = self.items))
+		lesson_2_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  self.sources, lesson_items = self.items, lesson_names = self.names))
 		self.root.ids.lessons_home_widget.add_widget(lesson_2_button)
 
 		test_2_button = MDRectangleFlatIconButton(text = 'Test 2', icon = '', size_hint = (1, 1))
