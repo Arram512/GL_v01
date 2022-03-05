@@ -15,14 +15,13 @@ from kivy.uix.button import Button
 from kivy.properties import StringProperty, ObjectProperty, ListProperty, NumericProperty, Property
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
-from models import get_introductions, get_description, get_name, get_sources, add_to_favorites, get_from_favorites
+from models import get_introductions, get_description, get_name, get_sources, add_to_favorites, get_from_favorites, delete_from_favorites
 from functools import partial
 import random, time
 from kivy.clock import Clock
 from kivymd.uix.label import MDLabel
 
 
-Window.size = (320, 600)
 
 
 
@@ -48,6 +47,11 @@ class FirstLevelCallBacks:
 			self.filling_favorites()
 		else:
 			pass
+
+	def delete_from_favorite(self, instance):
+		
+		delete_from_favorites(instance)
+		self.filling_favorites()
 
 	def favorite_gestures_list(self, sources, names, descriptions):
 

@@ -2,16 +2,11 @@
 
 	orientation: 'vertical'
 
-	MDIconButton:
-		icon: 'heart-outline'
-		on_release: app.add_to_favorite(root)
-		size_hint_y: 0.2
-        pos_hint: {"center_x": .9}
 
 	AsyncImage:
 		id: lesson_image
 		source: root.source
-
+		size_hint_y: .4
 
 	MDLabel:
 		id: lesson_description
@@ -24,21 +19,32 @@
 	MDBoxLayout:
 		orientation: 'horizontal'
 
-		MDRoundFlatButton:
+		MDRectangleFlatIconButton:
 			id: lesson_previouse_button
 			font_name: app.font_name
+			icon: ''
 			text: 'Նախորդը'
 			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root , root.iterator - 1)
 			size_hint_y: .2
 			size_hint_x: .5
 			
-		MDRoundFlatButton:
+		MDRectangleFlatIconButton:
 			id: lesson_next_button
 			font_name: app.font_name
+			icon: ''
 			text: 'Հաջորդը'
 			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names, root,  root.iterator + 1)
 			size_hint_y: .2
 			size_hint_x: .5
+	
+	MDRectangleFlatIconButton:
+		icon: 'heart-outline'
+		font_name: app.font_name
+		text: 'Դարձնել ֆավորիտ'
+		on_release: app.add_to_favorite(root)
+		size_hint_y: 0.2
+		size_hint_x: 1
+		pos_hint: {'center_x': .5}
 
 <LessonsHomeWidget>:
 	cols: 1
@@ -175,6 +181,7 @@
 
 	orientation: 'vertical'
 
+
 	AsyncImage:
 		id: favorite_image
 		source: root.source
@@ -203,6 +210,16 @@
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator + 1)
 			size_hint_y: .3
 			size_hint_x: .5
+
+		
+	MDRectangleFlatIconButton:
+		icon: 'heart-outline'
+		font_name: app.font_name
+		text: 'Հեռացնել'
+		on_release: app.delete_from_favorite(root.name)
+		size_hint_y: 0.2
+		size_hint_x: 1
+		pos_hint: {'center_x': .5}
 
 
 

@@ -75,7 +75,11 @@ def get_from_favorites():
     return favorite_names, favorite_sources, favorite_descriptions
 
 
+def delete_from_favorites(item):
 
+    query = "DELETE FROM favorites WHERE name = '{}'".format(item)
+    cursor.execute(query)
+    db.commit()
 
 
 
