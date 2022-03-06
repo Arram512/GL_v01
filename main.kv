@@ -3,9 +3,14 @@
 	orientation: 'vertical'
 
 
-	AsyncImage:
+	Image:
 		id: lesson_image
 		source: root.source
+		size_hint_y: .7
+		size_hint_x: .9
+		allow_stretch: True
+		keep_ratio: False
+		pos_hint: {'center_x': 0.5}
 
 	MDLabel:
 		id: lesson_description
@@ -24,7 +29,7 @@
 			font_name: app.font_name
 			icon: ''
 			text: 'Նախորդը'
-			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root , root.iterator - 1)
+			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root , root.iterator - 1, root.title)
 			size_hint_x: .5
 			
 		MDRectangleFlatIconButton:
@@ -32,7 +37,7 @@
 			font_name: app.font_name
 			icon: ''
 			text: 'Հաջորդը'
-			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names, root,  root.iterator + 1)
+			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names, root,  root.iterator + 1, root.title)
 			size_hint_x: .5
 	
 	MDRectangleFlatIconButton:
@@ -123,11 +128,14 @@
 		size_hint_y: .1
 		halign: 'center'
 
-	AsyncImage:
+	Image:
 		id: test_image
 		source: root.source
-		#size_hint_x: None
-		width: 100
+		size_hint_y: .7
+		size_hint_x: .9
+		allow_stretch: True
+		keep_ratio: False
+		pos_hint: {'center_x': 0.5}
 
 
 	GridLayout:
@@ -172,7 +180,7 @@
 	MDRoundFlatButton:
 		font_name: app.font_name
 		text: 'Հաջորդը'
-		on_release: app.test_callback(self, root.test_sources, root.test_names, root.iterator + 1)
+		on_release: app.test_callback(self, root.test_sources, root.test_names, root.iterator + 1, root.title)
 		size_hint_y: .2
 		size_hint_x: 1
 
@@ -182,24 +190,32 @@
 	orientation: 'vertical'
 
 
-	AsyncImage:
+	Image:
 		id: favorite_image
 		source: root.source
+		size_hint_y: .7
+		size_hint_x: .9
+		allow_stretch: True
+		keep_ratio: False
+		pos_hint: {'center_x': 0.5}
+
+
 	MDLabel:
 		id: favorite_name
 		font_name: app.font_name
 		text: root.name + '\n'+ '\n' + root.description
+		size_hint_y: .3
 
 	MDBoxLayout:
 		orientation: 'horizontal'
 
+		size_hint_y: .3
 
 		MDRectangleFlatButton:
 			id: favorite_previouse_button
 			font_name: app.font_name
 			text: 'Նախորդը'
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator - 1)
-			size_hint_y: .3
 			size_hint_x: .5
 
 		MDRectangleFlatButton:
@@ -208,7 +224,6 @@
 			font_name: app.font_name
 			text: 'Հաջորդը'
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator + 1)
-			size_hint_y: .3
 			size_hint_x: .5
 
 		
@@ -217,7 +232,6 @@
 		font_name: app.font_name
 		text: 'Հեռացնել'
 		on_release: app.delete_from_favorite(root.name)
-		size_hint_y: 0.2
 		size_hint_x: 1
 		pos_hint: {'center_x': .5}
 
@@ -261,8 +275,7 @@
 							orientation: 'vertical'
 							MDToolbar:
 								id: lessons_home_toolbar
-								size_hint_y: .1
-								text: 'Toolbar'
+								title: 'Դասեր'
 
 							ScrollView:
 								do_scroll_x: False
@@ -281,6 +294,7 @@
 							orientation: 'vertical'
 
 							MDToolbar:
+								id: lessons_more_toolbar
 								left_action_items: [["arrow-left", lambda x: app.lessons_back_button(self)]]
 
 							LessonsMoreWidget: 					#Lessons more widget
@@ -323,7 +337,6 @@
 							
 							MDToolbar:
 								id: tests_more_screen_toolbar
-								title: 'Թեստեր'
 								left_action_items: [["arrow-left", lambda x: app.tests_back_button(self)]]
 
 							ScrollView:
