@@ -271,7 +271,8 @@ class RootWidget(ScreenManager):
 class MainApp(MDApp, FirstLevelCallBacks):
 
 
-	window = Window.size[1]
+	width = Window.size[0]
+	height = Window.size[1]
 
 	font_name = './FreeSans.ttf'
 
