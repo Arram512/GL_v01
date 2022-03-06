@@ -6,18 +6,18 @@
 	AsyncImage:
 		id: lesson_image
 		source: root.source
-		size_hint_y: .4
 
 	MDLabel:
 		id: lesson_description
-		text: root.name + '\n\n\n' + root.description
+		text: root.name + '\n' + root.description
 		font_name: app.font_name
-		size_hint_y: .2
+		size_hint_y: .3
 		font_size: 20
 		halign: 'center'
 
 	MDBoxLayout:
 		orientation: 'horizontal'
+		size_hint_y: .3
 
 		MDRectangleFlatIconButton:
 			id: lesson_previouse_button
@@ -25,7 +25,6 @@
 			icon: ''
 			text: 'Նախորդը'
 			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root , root.iterator - 1)
-			size_hint_y: .2
 			size_hint_x: .5
 			
 		MDRectangleFlatIconButton:
@@ -34,7 +33,6 @@
 			icon: ''
 			text: 'Հաջորդը'
 			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names, root,  root.iterator + 1)
-			size_hint_y: .2
 			size_hint_x: .5
 	
 	MDRectangleFlatIconButton:
