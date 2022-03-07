@@ -13,7 +13,7 @@ alpha = {
 }
 
 
-parts = ['Images/Intro', 'Images/Alphavite/', 'Images/Canotuttyn/']
+parts = ['Images/Intro', 'Images/Alphavite/', 'Images/Guyner/']
 
 descs = ['adrbejan description', 'agah description', 'akumb description', 'albania description', 'amis description']
 
@@ -21,7 +21,7 @@ names = []
 gifs = []
 
 
-os.chdir('C:\\Users\\User\\Desktop\\KivyProject\\KivyApp\\Images\\Canotuttyn')
+os.chdir('C:\\Users\\User\\Desktop\\KivyProject\\KivyApp\\Images\\Guyner')
 
 for i in os.listdir():
 
@@ -33,23 +33,19 @@ for i in os.listdir():
 			tm = '.png'
 		if j in alpha:
 			res += alpha[j]
-	os.rename(i, res + tm)
+	gifs.append(parts[2] + i)
 
-
-# 	if 'gif' in i:
-# 		names.append(i.replace('.gif', ''))
-# 	else:
-# 		names.append(i.replace('.png', ''))
-
+	if 'gif' in i:
+		names.append(i.replace('.gif', ''))
+	else:
+		names.append(i.replace('.png', ''))
 
 
 
-# print(names, gifs)
-
-# for i in range(len(names)):
-#     query = f"INSERT INTO gestures(part, name, description, gif) VALUES ('{parts[2]}', '{names[i]}', 'Նկարագրություն', '{gifs[i]}')"
-#     cursor.execute(query)
-# db.commit()
+for i in range(len(names)):
+    query = f"INSERT INTO gestures(part, name, description, gif) VALUES ('{parts[2]}', '{names[i]}', 'Նկարագրություն', '{gifs[i]}')"
+    cursor.execute(query)
+db.commit()
 
 # info = cursor.execute("SELECT * FROM gestures")
 # print(info.fetchall())
