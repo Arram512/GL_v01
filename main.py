@@ -296,22 +296,35 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 		#LESSON 1 BUTTONS
 
-		parts = ['Alphavite', 'Ashxarh', 'Canotuttyn', 'Guyner','Jamanak' ]
-		part_names = ['Այբուբեն', 'Աշխարհագրություն', 'Ծանոթություն', "Գույներ", 'Ժամանակ']
+		parts = ['Alphavite', 'Ashxarh', 'Canotuttyn', 'Guyner','Jamanak', 'Tver' ]
+		part_names = ['Ներածություն', 'Այբուբեն','Թվեր', "Գույներ", 'Ծանոթություն','Ժամանակ', 'Մարդ', 'Բարեկամություն, ընտանիք', 'Աշխարհ', 'Բնություն','Տուն, տան պարագաներ', 'Տարածված արտահայտություններ',  "Հագուստ", "Կենդանիներ", "Սպորտ, հանգիստ", "Օրենք, իրավունք", "Բժշկություն", "Էմոցյաներ, զգացմունքներ", "Աշխատանք, մասնագիտություն", "Կրոն", "Հոմանիշներ և հականիշներ"]
 
-		for item in range(len(parts)):
 
-			sources = get_sources(parts[item])
-			descriptions = get_description(parts[item])
-			names = get_name(parts[item])
+		for item in range(len(part_names)):
 
-			lesson_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '', size_hint = (1, 1), font_name = self.font_name)
-			lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  sources, lesson_items = descriptions, lesson_names = names, title = lesson_1_button.text))
-			self.root.ids.lessons_home_widget.add_widget(lesson_1_button)
+			try:
 
-			test_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '' ,size_hint = (1, 1), font_name = self.font_name)
-			test_1_button.bind(on_press = partial(self.test_callback, lesson_sources = sources, lesson_items = names, title = test_1_button.text))
-			self.root.ids.tests_home_widget.add_widget(test_1_button)
+				sources = get_sources(parts[item])
+				descriptions = get_description(parts[item])
+				names = get_name(parts[item])
+
+				lesson_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '', size_hint = (1, 1), font_name = self.font_name)
+				lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  sources, lesson_items = descriptions, lesson_names = names, title = lesson_1_button.text))
+				self.root.ids.lessons_home_widget.add_widget(lesson_1_button)
+
+				test_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '' ,size_hint = (1, 1), font_name = self.font_name)
+				test_1_button.bind(on_press = partial(self.test_callback, lesson_sources = sources, lesson_items = names, title = test_1_button.text))
+				self.root.ids.tests_home_widget.add_widget(test_1_button)
+			except:
+				lesson_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '', size_hint = (1, 1), font_name = self.font_name)
+				self.root.ids.lessons_home_widget.add_widget(lesson_1_button)
+
+				test_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '' ,size_hint = (1, 1), font_name = self.font_name)
+				self.root.ids.tests_home_widget.add_widget(test_1_button)
+
+
+
+
 
 
 

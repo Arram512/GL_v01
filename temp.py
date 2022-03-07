@@ -1,5 +1,5 @@
 from posixpath import abspath
-import sqlite3, os
+import sqlite3, os, random
 
 db = sqlite3.connect('app.db')
 cursor = db.cursor()
@@ -13,7 +13,7 @@ alpha = {
 }
 
 
-parts = ['Images/Intro', 'Images/Alphavite/', 'Images/Jamanak/']
+parts = ['Images/Intro', 'Images/Alphavite/', 'Images/Tver/']
 
 descs = ['adrbejan description', 'agah description', 'akumb description', 'albania description', 'amis description']
 
@@ -21,34 +21,61 @@ names = []
 gifs = []
 
 
-os.chdir('C:\\Users\\User\\Desktop\\KivyProject\\KivyApp\\Images\\Jamanak')
+# os.chdir('C:\\Users\\User\\Desktop\\KivyProject\\KivyApp\\Images\\Tver')
 
 
-for i in os.listdir():
+# a = 'qwertyuiopasdfghjklzxcvbnm'
+# nums = '1234567890'
 
-	res = ''
-	for j in i:
-		if 'gif' in i:
-			tm = '.gif'
-		else:
-			tm = '.png'
-		if j in alpha:
-			res += alpha[j]
-	os.rename(i, res + tm)
+# r = ['gif', 'png']
+
+# for i in os.listdir():
+
+# 	res = ''
 
 # 	if 'gif' in i:
 # 		names.append(i.replace('.gif', ''))
 # 	else:
 # 		names.append(i.replace('.png', ''))
 
+# 	if 'gif' in i:
+# 		tm = '.gif'
+# 	else:
+# 		tm = '.png'
+
+# 	for j in i:
+
+# 		if j in nums:
+# 			res = i
+# 			continue
+
+
+# 		if j.lower() in alpha:
+# 			res += alpha[j.lower()]
+
+# 	if res[-3:] not in r:
+# 		gifs.append(parts[2] + res + tm)
+# 	else:
+# 		gifs.append(parts[2] + res)
+
+
+# 	# res = parts[2] + res + tm
+
+# 	# if res in gifs:
+# 	# 	res = res[:len(res) - 4] + '1' + random.choice(a) + '.gif'
+# 	# os.rename(i, res.split('/')[2])
+
+
+# print(len(gifs), len(names))
 # print(gifs, names)
 
 
 
 # for i in range(len(gifs)):
-#     query = f"INSERT INTO gestures(part, name, description, gif) VALUES ('{parts[2]}', '{names[i]}', 'Նկարագրություն', 'gif')"
+#     query = f"INSERT INTO gestures(part, name, description, gif) VALUES ('{parts[2]}', '{names[i]}', 'Նկարագրություն', '{gifs[i]}')"
 #     cursor.execute(query)
 # db.commit()
+
 # for i in range(len(gifs)):
 #     query = f"UPDATE gestures SET gif = '{gifs[i]}' where name like '%{names[i].strip()}%'"
 #     cursor.execute(query)
@@ -58,16 +85,19 @@ for i in os.listdir():
 # data = info.fetchall()
 # print(data)
 
-# with open('text.txt', 'r', encoding  = 'utf-8') as file:
+with open('text.txt', 'r', encoding  = 'utf-8') as file:
 
-# 	for line in file.readlines():
-# 		name, description = line.split('-')
-# 		description = description[1].title() + description[2:]
-# 		print(name, description)
-# 		query = "UPDATE gestures SET description = '{}' where name like '%{}%'".format(description, name.strip())
-# 		cursor.execute(query)
+	for line in file.readlines():
+		#print(line.split('-'))
+		name, description = line.split('-')
+		print(name, description)
+		description = description[1].title() + description[2:]
+		query = "UPDATE gestures SET description = '{}' where name like '%{}%'".format(description, name.strip())
+		#query = 'SELECT * from gestures where name = "{}"'.format(name.strip())
+		z = cursor.execute(query)
+		#print(z.fetchall())
 
-# db.commit()
+db.commit()
 
 # for item in data:
 # 	print(item)
