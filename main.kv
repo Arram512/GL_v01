@@ -1,7 +1,7 @@
 <LessonDrawer>:
 
 	orientation: 'vertical'
-
+	spacing: 20
 
 	Image:
 		id: lesson_image
@@ -16,7 +16,7 @@
 		id: lesson_description
 		text: root.name + '\n' + root.description
 		font_name: app.font_name
-		font_size: 45
+		font_size: 50
 		size_hint_y: .3
 		halign: 'center'
 
@@ -29,7 +29,7 @@
 			font_name: app.font_name
 			icon: ''
 			text: 'Նախորդը'
-			font_size: 22
+			font_size: 60
 			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root , root.iterator - 1, root.title)
 			size_hint_x: .5
 			
@@ -38,7 +38,7 @@
 			font_name: app.font_name
 			icon: ''
 			text: 'Հաջորդը'
-			font_size: 22
+			font_size: 60
 			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names, root,  root.iterator + 1, root.title)
 			size_hint_x: .5
 	
@@ -46,9 +46,8 @@
 		icon: 'heart-outline'
 		font_name: app.font_name
 		text: 'Դարձնել ֆավորիտ'
-		font_size: 20
+		font_size: 60
 		on_release: app.add_to_favorite(root)
-		size_hint_y: 0.2
 		size_hint_x: 1
 		pos_hint: {'center_x': .5}
 
@@ -151,7 +150,7 @@
 			size_hint_x: .5
 			size_hint_y: 1
 			id: button_1
-			font_size: 22
+			font_size: 60
 			font_name: app.font_name
 			text: root.options[0]
 			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
@@ -160,7 +159,7 @@
 			size_hint_x: .5
 			size_hint_y: 1
 			id: button_2
-			font_size: 22
+			font_size: 60
 			font_name: app.font_name
 			text: root.options[1]
 			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
@@ -179,7 +178,7 @@
 			size_hint_x: .5
 			size_hint_y: 1
 			id: button_4
-			font_size: 22
+			font_size: 60
 			font_name: app.font_name
 			text: root.options[3]
 			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
@@ -187,7 +186,7 @@
 	MDRoundFlatButton:
 		font_name: app.font_name
 		text: 'Հաջորդը'
-		font_size: 22
+		font_size: 55
 		on_release: app.test_callback(self, root.test_sources, root.test_names, root.iterator + 1, root.title)
 		size_hint_y: .2
 		size_hint_x: 1
@@ -212,7 +211,7 @@
 		id: favorite_name
 		font_name: app.font_name
 		text: root.name + '\n'+ '\n' + root.description
-		font_size: 37
+		font_size: 50
 		size_hint_y: .3
 
 	MDBoxLayout:
@@ -224,7 +223,7 @@
 			id: favorite_previouse_button
 			font_name: app.font_name
 			text: 'Նախորդը'
-			font_size: 22
+			font_size: 55
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator - 1)
 			size_hint_x: .5
 
@@ -233,7 +232,7 @@
 			id: favorite_next_button
 			font_name: app.font_name
 			text: 'Հաջորդը'
-			font_size: 22
+			font_size: 55
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator + 1)
 			size_hint_x: .5
 
@@ -242,7 +241,7 @@
 		icon: 'close-circle'
 		font_name: app.font_name
 		text: 'Հեռացնել'
-		font_size: 22
+		font_size: 55
 		on_release: app.delete_from_favorite(root.name)
 		size_hint_x: 1
 		pos_hint: {'center_x': .5}

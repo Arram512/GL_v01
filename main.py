@@ -296,8 +296,8 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 		#LESSON 1 BUTTONS
 
-		parts = ['Alphavite', 'Ashxarh', 'Canotuttyn', 'Guyner']
-		part_names = ['Այբուբեն', 'Աշխարհագրություն', 'Ծանոթություն', "Գույներ"]
+		parts = ['Alphavite', 'Ashxarh', 'Canotuttyn', 'Guyner','Jamanak' ]
+		part_names = ['Այբուբեն', 'Աշխարհագրություն', 'Ծանոթություն', "Գույներ", 'Ժամանակ']
 
 		for item in range(len(parts)):
 

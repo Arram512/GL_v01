@@ -13,7 +13,7 @@ alpha = {
 }
 
 
-parts = ['Images/Intro', 'Images/Alphavite/', 'Images/Guyner/']
+parts = ['Images/Intro', 'Images/Alphavite/', 'Images/Jamanak/']
 
 descs = ['adrbejan description', 'agah description', 'akumb description', 'albania description', 'amis description']
 
@@ -21,7 +21,8 @@ names = []
 gifs = []
 
 
-os.chdir('C:\\Users\\User\\Desktop\\KivyProject\\KivyApp\\Images\\Guyner')
+os.chdir('C:\\Users\\User\\Desktop\\KivyProject\\KivyApp\\Images\\Jamanak')
+
 
 for i in os.listdir():
 
@@ -33,19 +34,40 @@ for i in os.listdir():
 			tm = '.png'
 		if j in alpha:
 			res += alpha[j]
-	gifs.append(parts[2] + i)
+	os.rename(i, res + tm)
 
-	if 'gif' in i:
-		names.append(i.replace('.gif', ''))
-	else:
-		names.append(i.replace('.png', ''))
+# 	if 'gif' in i:
+# 		names.append(i.replace('.gif', ''))
+# 	else:
+# 		names.append(i.replace('.png', ''))
+
+# print(gifs, names)
 
 
 
-for i in range(len(names)):
-    query = f"INSERT INTO gestures(part, name, description, gif) VALUES ('{parts[2]}', '{names[i]}', 'Նկարագրություն', '{gifs[i]}')"
-    cursor.execute(query)
-db.commit()
+# for i in range(len(gifs)):
+#     query = f"INSERT INTO gestures(part, name, description, gif) VALUES ('{parts[2]}', '{names[i]}', 'Նկարագրություն', 'gif')"
+#     cursor.execute(query)
+# db.commit()
+# for i in range(len(gifs)):
+#     query = f"UPDATE gestures SET gif = '{gifs[i]}' where name like '%{names[i].strip()}%'"
+#     cursor.execute(query)
+# db.commit()
 
-# info = cursor.execute("SELECT * FROM gestures")
-# print(info.fetchall())
+# info = cursor.execute("SELECT * FROM gestures where part = 'Images/Ashxarh/'")
+# data = info.fetchall()
+# print(data)
+
+# with open('text.txt', 'r', encoding  = 'utf-8') as file:
+
+# 	for line in file.readlines():
+# 		name, description = line.split('-')
+# 		description = description[1].title() + description[2:]
+# 		print(name, description)
+# 		query = "UPDATE gestures SET description = '{}' where name like '%{}%'".format(description, name.strip())
+# 		cursor.execute(query)
+
+# db.commit()
+
+# for item in data:
+# 	print(item)
