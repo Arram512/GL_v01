@@ -1,16 +1,15 @@
 import os
 import sqlite3
 
-def get_introductions(item):
-    lessons_a = {}
-    path = os.path.dirname(os.path.abspath(__file__))
-    dir = f"\\Images\\{item}\\"
-    gifs = os.listdir(path + dir)
-    for i in range(len(gifs)):
-        gif = gifs[i].split('.')[0]
-        lessons_a[path + dir + gifs[i]] = f"{gif}"
+def searchByName(item):
+    
+    query = f"SELECT * FROM gestures where name like '%{item}%'"
 
-    return lessons_a
+    data = cursor.execute(query).fetchall()
+
+    return data
+
+    
 
 db = sqlite3.connect('app.db')
 cursor = db.cursor()

@@ -15,7 +15,8 @@ from kivy.uix.button import Button
 from kivy.properties import StringProperty, ObjectProperty, ListProperty, NumericProperty, Property
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
-from models import get_introductions, get_description, get_name, get_sources, add_to_favorites, get_from_favorites, delete_from_favorites
+from sqlalchemy import desc
+from models import get_description, get_name, get_sources, add_to_favorites, get_from_favorites, delete_from_favorites, searchByName
 from functools import partial
 import random, time
 from kivy.clock import Clock
@@ -28,6 +29,21 @@ from kivymd.uix.label import MDLabel
 class FirstLevelCallBacks:
 
 	true_answers = 0
+
+
+	def search_gesture_in_database(self, gesture_name):
+		result = searchByName(gesture_name)
+		names = []
+		descriptions = []
+		sources = []
+		if len(result) > 0:
+			for item in result:
+				names.append(item[2])
+				descriptions.append(item[3])
+				sources.append(item[4])
+
+		self.lesson_callback(self, sources, descriptions, names)
+		self.root.ids.bottom_navigation.ids.tab_manager.current = 'lessons_item'
 
 	
 	def filling_favorites(self):
@@ -292,11 +308,14 @@ class MainApp(MDApp, FirstLevelCallBacks):
 		self.root.ids.tests_more_screen_toolbar.ids.label_title.font_name = self.font_name
 		self.root.ids.lessons_home_toolbar.ids.label_title.font_name = self.font_name
 		self.root.ids.lessons_more_toolbar.ids.label_title.font_name = self.font_name
+		self.root.ids.tests_home_toolbar.ids.label_title.font_name = self.font_name
+		self.root.ids.settings_home_toolbar.ids.label_title.font_name = self.font_name
+
 
 
 		#LESSON 1 BUTTONS
 
-		parts = ['Alphavite', 'Ashxarh', 'Canotuttyn', 'Guyner','Jamanak', 'Tver' ]
+		parts = ['', 'Alphavite', 'Tver', 'Guyner', 'Canotuttyn','Jamanak']
 		part_names = ['Ներածություն', 'Այբուբեն','Թվեր', "Գույներ", 'Ծանոթություն','Ժամանակ', 'Մարդ', 'Բարեկամություն, ընտանիք', 'Աշխարհ', 'Բնություն','Տուն, տան պարագաներ', 'Տարածված արտահայտություններ',  "Հագուստ", "Կենդանիներ", "Սպորտ, հանգիստ", "Օրենք, իրավունք", "Բժշկություն", "Էմոցյաներ, զգացմունքներ", "Աշխատանք, մասնագիտություն", "Կրոն", "Հոմանիշներ և հականիշներ"]
 
 

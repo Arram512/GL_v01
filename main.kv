@@ -258,12 +258,11 @@
 		MDBottomNavigation:
 			id: bottom_navigation
 
-
-
 			MDBottomNavigationItem:  							#Lessons item
 				name: 'lessons_item'
 				id: lessons_bottom_navigation_item
-				text: 'Lessons'
+				text: ''
+				icon: 'gesture'
 
 				ScreenManager:  							#Lessons item screenmanager
 					id: lessons_screens_manager
@@ -318,7 +317,8 @@
 			MDBottomNavigationItem:
 				name: 'tests_item'
 				id: tests_bottom_navigation_item
-				text: 'Tests'
+				text: ''
+				icon: 'ab-testing'
 
 				ScreenManager:
 					id: test_screens_manager
@@ -327,14 +327,20 @@
 						name: 'tests_home_screen'
 						id: tests_home_screen
 
+						MDBoxLayout:
+							orientation: 'vertical'
+							MDToolbar:
+								id:tests_home_toolbar
+								title: 'Թեստեր'
 
-						ScrollView:
-							do_scroll_x: False
-							do_scroll_y: True
 
-							TestsHomeWidget:
+							ScrollView:
+								do_scroll_x: False
+								do_scroll_y: True
 
-								id: tests_home_widget
+								TestsHomeWidget:
+
+									id: tests_home_widget
 
 
 					Screen:
@@ -368,7 +374,8 @@
 			MDBottomNavigationItem:
 				name: 'favorites_item'
 				#id: favorites_bottom_navigation_item
-				text: 'Favorites'
+				text: ''
+				icon: 'heart'
 
 
 				ScreenManager:
@@ -420,16 +427,40 @@
 			MDBottomNavigationItem:
 				name: 'settings_item'
 				id: settings_bottom_navigation_item
-				text: 'Settings'
+				text: ''
+				icon: 'application-settings'
 
-				MDRectangleFlatIconButton:
-    				icon: "theme-light-dark"
-    				text: "Change theme"
-					pos_hint:{"top":1}
-					size_hint_x: 1
-					size_hint_y: .1
-					on_release: app.change_theme(self)
-				
+
+				MDGridLayout:
+
+					cols: 1
+
+					MDToolbar:
+						id: settings_home_toolbar
+						title: 'Կարգավորումներ'
+
+
+					MDBoxLayout:
+						orientation: 'horizontal'
+						MDTextField:
+							id: search_name
+							adaptive_height: True
+							font_name: app.font_name
+							hint_text: 'Search gesture by name'
+
+						MDIconButton:
+							icon: 'magnify'
+							on_release:
+								app.search_gesture_in_database(root.ids.search_name.text)
+					
+					MDRectangleFlatIconButton:
+						icon: "theme-light-dark"
+						text: "Փոխել գունային սխեման"
+						pos_hint:{"top":1}
+						size_hint_x: 1
+						size_hint_y: .2
+						font_name: app.font_name
+						on_release: app.change_theme(self)
 				
 
 
