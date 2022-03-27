@@ -1,0 +1,55 @@
+<FavoritesDrawer>:
+
+	orientation: 'vertical'
+
+
+	Image:
+		id: favorite_image
+		source: root.source
+		size_hint_y: .7
+		size_hint_x: .9
+		allow_stretch: True
+		keep_ratio: False
+		pos_hint: {'center_x': 0.5}
+
+
+	MDLabel:
+		id: favorite_name
+		font_name: app.font_name
+		text: root.name + '\n'+ '\n' + root.description
+		font_size: 50
+		size_hint_y: .3
+
+	MDBoxLayout:
+		orientation: 'horizontal'
+
+		size_hint_y: .3
+
+		MDRectangleFlatButton:
+			id: favorite_previouse_button
+			font_name: app.font_name
+			text: 'Նախորդը'
+			font_size: 55
+			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator - 1)
+			size_hint_x: .5
+
+		MDRectangleFlatButton:
+
+			id: favorite_next_button
+			font_name: app.font_name
+			text: 'Հաջորդը'
+			font_size: 55
+			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator + 1)
+			size_hint_x: .5
+
+		
+	MDRectangleFlatIconButton:
+		icon: 'close-circle'
+		font_name: app.font_name
+		text: 'Հեռացնել'
+		font_size: 55
+		on_release: app.delete_from_favorite(root.name)
+		size_hint_x: 1
+		pos_hint: {'center_x': .5}
+
+

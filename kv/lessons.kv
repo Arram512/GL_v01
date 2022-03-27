@@ -1,0 +1,78 @@
+<LessonDrawer>:
+
+	orientation: 'vertical'
+	spacing: 20
+
+	Image:
+		id: lesson_image
+		source: root.source
+		size_hint_y: .7
+		size_hint_x: .9
+		allow_stretch: True
+		keep_ratio: False
+		pos_hint: {'center_x': 0.5}
+
+	MDLabel:
+		id: lesson_description
+		text: root.name + '\n' + root.description
+		font_name: app.font_name
+		font_size: 50
+		size_hint_y: .3
+		halign: 'center'
+
+	MDBoxLayout:
+		orientation: 'horizontal'
+		size_hint_y: .3
+
+		MDRectangleFlatIconButton:
+			id: lesson_previouse_button
+			font_name: app.font_name
+			icon: ''
+			text: 'Նախորդը'
+			font_size: 60
+			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root , root.iterator - 1, root.title)
+			size_hint_x: .5
+			
+		MDRectangleFlatIconButton:
+			id: lesson_next_button
+			font_name: app.font_name
+			icon: ''
+			text: 'Հաջորդը'
+			font_size: 60
+			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names, root,  root.iterator + 1, root.title)
+			size_hint_x: .5
+	
+	MDRectangleFlatIconButton:
+		icon: 'heart-outline'
+		font_name: app.font_name
+		text: 'Դարձնել ֆավորիտ'
+		font_size: 60
+		on_release: app.add_to_favorite(root)
+		size_hint_x: 1
+		pos_hint: {'center_x': .5}
+
+<LessonsHomeWidget>:
+	cols: 1
+	height: app.window
+	size_hint_y: None
+	height: self.minimum_height
+	spacing: 20
+
+
+<LessonsMoreWidget>:
+	cols: 1
+    # height: app.window
+    # size_hint_y: None
+	# height: self.minimum_height
+    spacing: 0
+
+	#Type code here#
+
+
+<LessonsBackButton>:
+
+	text: ' '
+	icon: 'arrow-left-bold-circle'
+	size_hint_y: 0.05
+	on_release:
+		app.lessons_back_button(self)

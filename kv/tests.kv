@@ -1,0 +1,112 @@
+<TestsBackButton>:
+
+	text: 'Go back'
+	size_hint_y: None
+	height: 60
+	on_release:
+		app.tests_back_button(self)
+
+<TestsHomeWidget>:
+	
+	cols: 1
+	height: app.window
+	size_hint_y: None
+	height: self.minimum_height
+	spacing: 20
+
+
+
+<TestMoreWidget>:
+	cols: 1
+
+	# size_hint_y: None
+	# height: self.minimum_height
+	spacing: 0
+
+<LastTestWidget>:
+ 
+	orientation: 'vertical'
+
+	MDToolbar:
+		left_action_items: [["arrow-left", lambda x: app.tests_back_button(self)]]
+
+
+	MDLabel:
+
+		text: root.answers
+		font_size: '200sp'
+		halign: 'center'
+		
+
+
+
+<TestDrawer>:
+	
+	orientation: 'vertical'
+	spacing: 20
+
+	MDLabel:
+		text: "True answers " + root.count
+		size_hint_y: .1
+		halign: 'center'
+
+	Image:
+		id: test_image
+		source: root.source
+		size_hint_y: .7
+		size_hint_x: .9
+		allow_stretch: True
+		keep_ratio: False
+		pos_hint: {'center_x': 0.5}
+
+
+	GridLayout:
+		id: options_layout
+		cols: 2
+		size_hint_y: .5
+		background_disabled_normal: ''
+
+		MDRoundFlatButton:
+			size_hint_x: .5
+			size_hint_y: 1
+			id: button_1
+			font_size: 60
+			font_name: app.font_name
+			text: root.options[0]
+			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
+
+		MDRoundFlatButton: 
+			size_hint_x: .5
+			size_hint_y: 1
+			id: button_2
+			font_size: 60
+			font_name: app.font_name
+			text: root.options[1]
+			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
+
+
+		MDRoundFlatButton: 
+			size_hint_x: .5
+			size_hint_y: 1
+			id: button_3
+			font_size: 60
+			font_name: app.font_name
+			text: root.options[2]
+			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
+
+		MDRoundFlatButton: 
+			size_hint_x: .5
+			size_hint_y: 1
+			id: button_4
+			font_size: 60
+			font_name: app.font_name
+			text: root.options[3]
+			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
+
+	MDRoundFlatButton:
+		font_name: app.font_name
+		text: 'Հաջորդը'
+		font_size: 55
+		on_release: app.test_callback(self, root.test_sources, root.test_names, root.iterator + 1, root.title)
+		size_hint_y: .2
+		size_hint_x: 1
