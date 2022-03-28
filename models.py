@@ -15,7 +15,7 @@ db = sqlite3.connect('app.db')
 cursor = db.cursor()
 
 def get_description(folder):
-    query = "SELECT description FROM gestures where part = 'Images/{}/'".format(folder)
+    query = f"SELECT description FROM gestures where gif like '%{folder}%'"
 
     data = cursor.execute(query).fetchall()
 
@@ -25,7 +25,7 @@ def get_description(folder):
 
 def get_name(folder):
 
-    query = "SELECT name FROM gestures where part = 'Images/{}/'".format(folder)
+    query = f"SELECT name FROM gestures where gif like '%{folder}%'"
 
     data = cursor.execute(query).fetchall()
 
@@ -35,7 +35,7 @@ def get_name(folder):
 
 def get_sources(folder):
 
-    query = "SELECT gif FROM gestures where part = 'Images/{}/'".format(folder)
+    query = f"SELECT gif FROM gestures where gif like '%{folder}%'"
 
     data = cursor.execute(query).fetchall()
 
