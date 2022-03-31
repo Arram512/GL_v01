@@ -1,10 +1,3 @@
-"""
-Յու բալիկներ։ Արամ ձաձյան պարապ ա ու իրա ստրուկտուրայի տարբերակն ա մշակել
-եթե տենամ դժվարանում եք, ցույց կտամ։ Բայց մեկա մինչև վերջ գրել եմ տալու, նոր կասեմ ձեզ սրա մասին ։-)
-"""
-
-from email import iterators
-from typing import List
 from kivymd.uix.dialog.dialog import MDDialog
 from kivymd.uix.button import MDRectangleFlatIconButton
 from kivymd.uix.button import MDRectangleFlatButton
@@ -12,15 +5,17 @@ from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
+from kivy.lang.builder import Builder
 from kivy.properties import StringProperty, ObjectProperty, ListProperty, NumericProperty, Property
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
-from sqlalchemy import desc
 from models import get_description, get_name, get_sources, add_to_favorites, get_from_favorites, delete_from_favorites, searchByName
 from functools import partial
 import random, time
 from kivy.clock import Clock
 from kivymd.uix.label import MDLabel
+import os
+import git
 
 
 
@@ -285,6 +280,17 @@ class RootWidget(ScreenManager):
 	pass
 
 
+
+class WelcomeScreen(MDApp):
+
+	def loader(self):
+		git.Repo.clone_from("https://github.com/Arram512/Animations", os.getcwd() + "\\Images")
+		self.root.ids.button.text = 'Перезагрузи черт блять'
+	
+	def build(self):
+		return Builder.load_file('./kv/welcome.kv')
+
+
 class MainApp(MDApp, FirstLevelCallBacks):
 
 
@@ -296,8 +302,6 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 
 	def on_start(self):
-
-		# Ստեղ լցնում ենք կնոպկեքը, խոսքը համ դասերի մասին ա, համ թեստերի և այլն
 
 
 		self.filling_favorites()
@@ -391,4 +395,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 
 if __name__ == '__main__':
-	MainApp().run()
+	if 'Images' not in os.listdir():
+		WelcomeScreen().run()
+	else:
+		MainApp().run()
