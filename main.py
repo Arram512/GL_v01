@@ -26,16 +26,16 @@ class FirstLevelCallBacks:
 	true_answers = 0
 
 
-	def search_gesture_in_database(self, gesture_name):
-		result = searchByName(gesture_name)
+	def search_gesture_in_database(self, gesture_name, language):
+		result = searchByName(gesture_name, language)
 		names = []
 		descriptions = []
 		sources = []
 		if len(result) > 0:
 			for item in result:
-				names.append(item[2])
-				descriptions.append(item[3])
-				sources.append(item[4])
+				names.append(item[0])
+				descriptions.append(item[1])
+				sources.append(item[2])
 
 		self.lesson_callback(self, sources, descriptions, names)
 		self.root.ids.bottom_navigation.ids.tab_manager.current = 'lessons_item'
@@ -297,7 +297,10 @@ class MainApp(MDApp, FirstLevelCallBacks):
 	width = Window.size[0]
 	height = Window.size[1]
 
+
 	font_name = './FreeSans.ttf'
+
+	LANGUAGE = ''
 
 
 
@@ -323,13 +326,14 @@ class MainApp(MDApp, FirstLevelCallBacks):
 			'Guyner',
 			'Canotuttyn',
 			'Jamanak',
-			'Bjshkuyun',
+			'Bjshkutyun',
 			'Tun',
 			'Hagust',
 			'Kendaniner',
 			'Masnagitutyun',
 			'Orenq',
 			'Sport',
+			'Ashxarh',
 
 
 			]
@@ -349,10 +353,10 @@ class MainApp(MDApp, FirstLevelCallBacks):
 			"Աշխատանք, մասնագիտություն",
 			"Օրենք, իրավունք",
 			"Սպորտ, հանգիստ",
+			'Աշխարհ',
 			'Մարդ',
 			'Բարեկամություն',
 			'Ընտանիք',
-			'Աշխարհ',
 			'Բնություն',
 			'Տարածված արտահայտություններ',
 			"Էմոցյաներ, զգացմունքներ",
@@ -366,8 +370,8 @@ class MainApp(MDApp, FirstLevelCallBacks):
 			try:
 
 				sources = get_sources(parts[item])
-				descriptions = get_description(parts[item])
-				names = get_name(parts[item])
+				descriptions = get_description(parts[item], self.LANGUAGE)
+				names = get_name(parts[item], self.LANGUAGE)
 
 				lesson_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '', size_hint = (1, 1), font_name = self.font_name)
 				lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  sources, lesson_items = descriptions, lesson_names = names, title = lesson_1_button.text))

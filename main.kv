@@ -205,7 +205,7 @@
 						MDIconButton:
 							icon: 'magnify'
 							on_release:
-								app.search_gesture_in_database(root.ids.search_name.text)
+								app.search_gesture_in_database(root.ids.search_name.text, app.LANGUAGE)
 					
 					MDRectangleFlatIconButton:
 						icon: "theme-light-dark"
@@ -215,6 +215,10 @@
 						size_hint_y: .2
 						font_name: app.font_name
 						on_release: app.change_theme(self)
+
+					
+					Button:
+						on_release: app.on_start()
 				
 
 

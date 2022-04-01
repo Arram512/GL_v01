@@ -1,9 +1,19 @@
 import os
 import sqlite3
 
-def searchByName(item):
+def searchByName(item, language):
+
+    name = 'name'
+    desc = 'description'
+
+    if language:
+
+        name = language + 'names'
+
+        desc = language + 'descriptions'
+
     
-    query = f"SELECT * FROM gestures where name like '%{item}%'"
+    query = f"SELECT {name}, {desc}, gif FROM gestures where {name} like '%{item}%'"
 
     data = cursor.execute(query).fetchall()
 
@@ -14,8 +24,15 @@ def searchByName(item):
 db = sqlite3.connect('app.db')
 cursor = db.cursor()
 
-def get_description(folder):
-    query = f"SELECT description FROM gestures where gif like '%{folder}%'"
+def get_description(folder, language):
+
+    desc = 'description'
+
+    if language:
+
+        desc = language + 'descriptions'
+
+    query = f"SELECT {desc} FROM gestures where gif like '%{folder}%'"
 
     data = cursor.execute(query).fetchall()
 
@@ -23,9 +40,15 @@ def get_description(folder):
 
     return descriptions
 
-def get_name(folder):
+def get_name(folder, language):
 
-    query = f"SELECT name FROM gestures where gif like '%{folder}%'"
+    name = 'name'
+
+    if language:
+
+        name = language + 'names'
+
+    query = f"SELECT {name} FROM gestures where gif like '%{folder}%'"
 
     data = cursor.execute(query).fetchall()
 
