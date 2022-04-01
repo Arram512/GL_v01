@@ -15,7 +15,7 @@ import random, time
 from kivy.clock import Clock
 from kivymd.uix.label import MDLabel
 import os
-import git
+from dulwich import porcelain
 
 
 
@@ -284,7 +284,9 @@ class RootWidget(ScreenManager):
 class WelcomeScreen(MDApp):
 
 	def loader(self):
-		git.Repo.clone_from("https://github.com/Arram512/Animations", os.getcwd() + "\\Images")
+		path = os.getcwd() + "/Images/"
+		os.mkdir(path)
+		porcelain.clone("https://github.com/Arram512/Animations", os.getcwd() + "/Images/")
 		self.root.ids.button.text = 'Перезагрузи черт блять'
 	
 	def build(self):
@@ -398,8 +400,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 
 
-if __name__ == '__main__':
-	if 'Images' not in os.listdir():
-		WelcomeScreen().run()
-	else:
-		MainApp().run()
+if 'Images' not in os.listdir():
+	WelcomeScreen().run()
+else:
+	MainApp().run()
