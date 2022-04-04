@@ -26,9 +26,14 @@
 
 						canvas.before:
 							Color:
-								rgba: rgba('#0e1574ff')
+								rgba: rgba('#42f59e')
 							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.5*self.size[1])]							#Lessons first screen
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#111c17')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]								#Lessons first screen
 
 						name: 'lessons_home_screen'
 						id: lessons_home_screen
@@ -39,7 +44,7 @@
 							orientation: 'vertical'
 							MDToolbar:
 								id: lessons_home_toolbar
-								title: 'Դասեր'
+								title: ''
 
 
 							ScrollView:
@@ -53,6 +58,8 @@
 
 						name: 'lessons_more_screen'
 						id: lessons_more_screen
+
+	
 
 
 						MDBoxLayout: 
@@ -80,6 +87,17 @@
 					Screen:
 						name: 'tests_home_screen'
 						id: tests_home_screen
+
+						canvas.before:
+							Color:
+								rgba: rgba('#f797b4')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#421724')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]	
 
 						MDBoxLayout:
 							orientation: 'vertical'
@@ -141,13 +159,25 @@
 						name: 'favorites_home_screen'
 						id: favorites_home_screen
 
+
+						canvas.before:
+							Color:
+								rgba: rgba('#f0c61d')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#735f0f')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]
+
 						
 						MDBoxLayout:
 							orientation: 'vertical'
 							
 							MDToolbar:
 								id: favorites_home_toolbar
-								title: 'Ֆավորիտներ'
+								title: ''
 						
 							ScrollView:
 								do_scroll_x: False
@@ -216,9 +246,21 @@
 						font_name: app.font_name
 						on_release: app.change_theme(self)
 
+					Button:
+						text: 'Armenian'
+						size_hint: .2, .2
+						on_release: app.change_language("")
 					
 					Button:
-						on_release: app.on_start()
+						text: 'Russian'
+						size_hint: .2, .2
+						on_release: app.change_language("ru_")
+
+										
+					Button:
+						text: 'English'
+						size_hint: .2, .2
+						on_release: app.change_language("en_")
 				
 
 

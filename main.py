@@ -15,7 +15,7 @@ import random, time
 from kivy.clock import Clock
 from kivymd.uix.label import MDLabel
 import os
-from dulwich import porcelain
+#from dulwich import porcelain
 
 
 
@@ -286,7 +286,7 @@ class WelcomeScreen(MDApp):
 	def loader(self):
 		path = os.getcwd() + "/Images/"
 		os.mkdir(path)
-		porcelain.clone("https://github.com/Arram512/Animations", os.getcwd() + "/Images/")
+		#porcelain.clone("https://github.com/Arram512/Animations", os.getcwd() + "/Images/")
 		self.root.ids.button.text = 'Перезагрузи черт блять'
 	
 	def build(self):
@@ -299,17 +299,48 @@ class MainApp(MDApp, FirstLevelCallBacks):
 	width = Window.size[0]
 	height = Window.size[1]
 
+	LANGUAGE = ""
+
 
 	font_name = './FreeSans.ttf'
 
-	LANGUAGE = ''
 
+	lesson_home_title = {"" : "Դասեր", "ru_": "Уроки", "en_":"Lessons"}
+
+	test_home_title = {"" : "Թեստեր", "ru_": "Тесты", "en_":"Tests"}
+
+	favorites_home_title = {"" : "Ֆավորիտներ", "ru_": "Избранное", "en_":"Favorites"}
+
+	settings_home_title = {"": "Կարգավորումներ", "ru_": "Настройки", "en_":"Settings"}
+
+
+
+
+
+	def change_language(self, language):
+
+		self.root.ids.lessons_home_widget.clear_widgets()
+		self.root.ids.tests_home_widget.clear_widgets()
+
+		self.LANGUAGE = language
+
+		self.on_start()
 
 
 	def on_start(self):
+		
+
 
 
 		self.filling_favorites()
+
+
+		self.root.ids.lessons_home_toolbar.title = self.lesson_home_title[self.LANGUAGE]
+		self.root.ids.tests_home_toolbar.title = self.test_home_title[self.LANGUAGE]
+		self.root.ids.favorites_home_toolbar.title = self.favorites_home_title[self.LANGUAGE]
+		self.root.ids.settings_home_toolbar.title = self.settings_home_title[self.LANGUAGE]
+
+
 
 		
 		self.root.ids.favorites_home_toolbar.ids.label_title.font_name = self.font_name
@@ -341,7 +372,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 			]
 
 
-		part_names = [
+		part_names = {"":[
 			'Ներածություն', 
 			'Այբուբեն',
 			'Թվեր',
@@ -363,11 +394,60 @@ class MainApp(MDApp, FirstLevelCallBacks):
 			'Տարածված արտահայտություններ',
 			"Էմոցյաներ, զգացմունքներ",
 			"Կրոն",
-			"Հոմանիշներ և հականիշներ"
+			],
+
+			"ru_": [
+				'Введение',
+				'Алфавит',
+				'Числа',
+				'Цвета',
+				'Знакомство',
+				'Время',
+				'Медицина',
+				'Дом, домашние вещи',
+				'Одежда, элементы одежды',
+				'Животные',
+				'Работа. Профессия',
+				'Закон, право',
+				'Спорт, отдых',
+				'Мир. Государства. Города',
+				'Человек',
+				'Родство',
+				'Семья',
+				'Природа',
+				'Распорстроненные выражения',
+				'Эмоции, чувства',
+				'Религия, вера',
+			],
+
+			"en_": [
+				'Introduction',
+				'Alphabet',
+				'Numbers',
+				'Colors',
+				'Acquaintance',
+				'Time',
+				'The medicine',
+				'House, household things',
+				'Clothes, elements of clothing',
+				'Animals',
+				'Work. Profession',
+				'Law, right',
+				'Sport, recreation',
+				'Peace. States. Cities',
+				'Human',
+				'Kinship',
+				'Family',
+				'Nature',
+				'Expanded Expressions',
+				'Emotions, feelings',
+				'Religion, faith',
 			]
 
+			}
 
-		for item in range(len(part_names)):
+
+		for item in range(len(part_names[self.LANGUAGE])):
 
 			try:
 
@@ -375,21 +455,19 @@ class MainApp(MDApp, FirstLevelCallBacks):
 				descriptions = get_description(parts[item], self.LANGUAGE)
 				names = get_name(parts[item], self.LANGUAGE)
 
-				lesson_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '', size_hint = (1, 1), font_name = self.font_name)
+				lesson_1_button = MDRectangleFlatIconButton(text = part_names[self.LANGUAGE][item], icon = '', size_hint = (1, 1), font_name = self.font_name)
 				lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  sources, lesson_items = descriptions, lesson_names = names, title = lesson_1_button.text))
 				self.root.ids.lessons_home_widget.add_widget(lesson_1_button)
 
-				test_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '' ,size_hint = (1, 1), font_name = self.font_name)
+				test_1_button = MDRectangleFlatIconButton(text = part_names[self.LANGUAGE][item], icon = '' ,size_hint = (1, 1), font_name = self.font_name)
 				test_1_button.bind(on_press = partial(self.test_callback, lesson_sources = sources, lesson_items = names, title = test_1_button.text))
 				self.root.ids.tests_home_widget.add_widget(test_1_button)
 			except:
-				lesson_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '', size_hint = (1, 1), font_name = self.font_name)
+				lesson_1_button = MDRectangleFlatIconButton(text = part_names[self.LANGUAGE][item], icon = '', size_hint = (1, 1), font_name = self.font_name)
 				self.root.ids.lessons_home_widget.add_widget(lesson_1_button)
 
-				test_1_button = MDRectangleFlatIconButton(text = part_names[item], icon = '' ,size_hint = (1, 1), font_name = self.font_name)
+				test_1_button = MDRectangleFlatIconButton(text = part_names[self.LANGUAGE][item], icon = '' ,size_hint = (1, 1), font_name = self.font_name)
 				self.root.ids.tests_home_widget.add_widget(test_1_button)
-
-
 
 
 

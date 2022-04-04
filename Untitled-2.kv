@@ -1,0 +1,69 @@
+
+				ScreenManager:  							#Lessons item screenmanager
+					id: lessons_screens_manager
+
+					Screen:   	
+					
+
+						canvas.before:
+							Color:
+								rgba: rgba('#42f59e')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#111c17')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]		
+
+
+						name: 'lessons_home_screen'
+						id: lessons_home_scree
+
+
+#######################################################################################################################################
+
+				ScreenManager:
+					id: test_screens_manager
+
+					Screen:
+					
+						canvas.before:
+							Color:
+								rgba: rgba('#f797b4')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#421724')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]		
+
+
+						name: 'tests_home_screen'
+						id: tests_home_screen
+
+
+########################################################################################################################################
+
+                ScreenManager:
+
+					id: favorites_screens_manager
+
+					Screen:
+
+						canvas.before:
+							Color:
+								rgba: rgba('#f0c61d')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#735f0f')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]		
+
+
+
+						name: 'favorites_home_screen'
+						id: favorites_home_screen
