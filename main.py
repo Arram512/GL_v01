@@ -148,7 +148,7 @@ class FirstLevelCallBacks:
 				options[random.randint(0, len(options) - 1)] = lesson_items[iterator]
 
 			if len(options) == 4:
-				self.root.ids.test_more_widget.add_widget(TestDrawer( title = title , iterator = iterator, test_sources = lesson_sources, test_names = lesson_items, source = lesson_sources[iterator], options = options, true_answer = lesson_items[iterator], count = str(self.true_answers)))
+				self.root.ids.test_more_widget.add_widget(TestDrawer(title = title , iterator = iterator, test_sources = lesson_sources, test_names = lesson_items, source = lesson_sources[iterator], options = options, true_answer = lesson_items[iterator], count = str(self.true_answers)))
 
 			else: 
 				pass
@@ -243,6 +243,8 @@ class TestMoreWidget(GridLayout):
 
 class TestDrawer(MDBoxLayout):
 
+
+
 	title = StringProperty()
 
 	iterator = NumericProperty()
@@ -258,6 +260,8 @@ class TestDrawer(MDBoxLayout):
 	true_answer = StringProperty()
 
 	count = StringProperty()
+
+	next_button = StringProperty()
 
 class LastTestWidget(MDBoxLayout):
 	answers = StringProperty()
@@ -312,7 +316,14 @@ class MainApp(MDApp, FirstLevelCallBacks):
 	favorites_home_title = {"" : "Ֆավորիտներ", "ru_": "Избранное", "en_":"Favorites"}
 
 	settings_home_title = {"": "Կարգավորումներ", "ru_": "Настройки", "en_":"Settings"}
+	
+	next_button = {"": "Հաջորդը", "ru_":"Следующий", "en_":"Next"}
 
+	previouse_button = {"": "Նախորդը", "ru_": "Предыдущий", "en_": "Previouse"}
+
+	add_favorite = {"": "Դարձնել ֆավորիտ", "ru_":"Добавить в Избранное", "en_":"Add to Favorites"}
+
+	drop_favorite = {"": "Հեռացնել", "ru_":"Удалить", "en_":"Delete"}
 
 
 
@@ -338,6 +349,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 		self.root.ids.lessons_home_toolbar.title = self.lesson_home_title[self.LANGUAGE]
 		self.root.ids.tests_home_toolbar.title = self.test_home_title[self.LANGUAGE]
 		self.root.ids.favorites_home_toolbar.title = self.favorites_home_title[self.LANGUAGE]
+		self.root.ids.favorites_more_toolbar.title = self.favorites_home_title[self.LANGUAGE]
 		self.root.ids.settings_home_toolbar.title = self.settings_home_title[self.LANGUAGE]
 
 

@@ -28,7 +28,7 @@
 		MDRectangleFlatButton:
 			id: favorite_previouse_button
 			font_name: app.font_name
-			text: 'Նախորդը'
+			text: app.previouse_button[app.LANGUAGE]
 			font_size: 55
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator - 1)
 			size_hint_x: .5
@@ -37,7 +37,7 @@
 
 			id: favorite_next_button
 			font_name: app.font_name
-			text: 'Հաջորդը'
+			text: app.next_button[app.LANGUAGE]
 			font_size: 55
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator + 1)
 			size_hint_x: .5
@@ -46,7 +46,7 @@
 	MDRectangleFlatIconButton:
 		icon: 'close-circle'
 		font_name: app.font_name
-		text: 'Հեռացնել'
+		text: app.drop_favorite[app.LANGUAGE]
 		font_size: 55
 		on_release: app.delete_from_favorite(root.name)
 		size_hint_x: 1
