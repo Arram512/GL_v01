@@ -2,8 +2,6 @@
 #:include kv/tests.kv
 #:include kv/favorites.kv
 
-
-
 <RootWidget>:
 	id: manager
 
@@ -28,14 +26,21 @@
 
 						canvas.before:
 							Color:
-								rgba: rgba('#42f59e')
+								rgba: rgba('#80358f')
 							Triangle:
 								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
 
 							Color:
-								rgba: rgba('#111c17')
+								rgba: rgba('#310b38')
 							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]								#Lessons first screen
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]							#Lessons first screen
+						
+						
+
+
+
+
+
 
 						name: 'lessons_home_screen'
 						id: lessons_home_screen
@@ -45,8 +50,26 @@
 
 							orientation: 'vertical'
 							MDToolbar:
+								md_bg_color: .35, .105, .36, 1
+
 								id: lessons_home_toolbar
 								title: ''
+
+								MDBoxLayout:
+
+
+
+									orientation: 'horizontal'
+
+									MDTextField:
+										id: search_name
+										adaptive_height: True
+										font_name: app.font_name
+
+									MDIconButton:
+										icon: 'magnify'
+										on_release:
+											app.search_gesture_in_database(root.ids.search_name.text, app.LANGUAGE)
 
 
 							ScrollView:
@@ -60,6 +83,16 @@
 
 						name: 'lessons_more_screen'
 						id: lessons_more_screen
+						canvas.before:
+							Color:
+								rgba: rgba('#310b38')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#80358f')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]	
 
 	
 
@@ -68,6 +101,7 @@
 							orientation: 'vertical'
 
 							MDToolbar:
+								md_bg_color: .35, .105, .36, 1
 								id: lessons_more_toolbar
 								left_action_items: [["arrow-left", lambda x: app.lessons_back_button(self)]]
 
@@ -92,12 +126,12 @@
 
 						canvas.before:
 							Color:
-								rgba: rgba('#f797b4')
+								rgba: rgba('#435dc4')
 							Triangle:
 								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
 
 							Color:
-								rgba: rgba('#421724')
+								rgba: rgba('#102473')
 							Triangle:
 								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]	
 
@@ -106,6 +140,7 @@
 							MDToolbar:
 								id:tests_home_toolbar
 								title: 'Թեստեր'
+		    					md_bg_color: .25, .35, .89, 1
 
 
 							ScrollView:
@@ -122,12 +157,24 @@
 
 						name: 'tests_more_screen'
 						id: 'tests_more_screen'
+						canvas.before:
+							Color:
+								rgba: rgba('#435dc4')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#102473')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]	
+
 
 						MDBoxLayout:
 
 							orientation: 'vertical'	
 							
 							MDToolbar:
+								md_bg_color: .25, .35, .89, 1
 								id: tests_more_screen_toolbar
 								left_action_items: [["arrow-left", lambda x: app.tests_back_button(self)]]
 
@@ -143,6 +190,16 @@
 
 						name: 'tests_last_screen'
 						id: tests_last_screen
+						canvas.before:
+							Color:
+								rgba: rgba('#435dc4')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#102473')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]	
 
 
 			MDBottomNavigationItem:
@@ -160,24 +217,24 @@
 
 						name: 'favorites_home_screen'
 						id: favorites_home_screen
-
-
 						canvas.before:
 							Color:
-								rgba: rgba('#f0c61d')
+								rgba: rgba('#9e6231')
 							Triangle:
 								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
 
 							Color:
-								rgba: rgba('#735f0f')
+								rgba: rgba('#c46c1f')
 							Triangle:
 								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]
 
 						
+
 						MDBoxLayout:
 							orientation: 'vertical'
 							
 							MDToolbar:
+								md_bg_color: .9, .43, .10, 1
 								id: favorites_home_toolbar
 								title: ''
 						
@@ -195,6 +252,16 @@
 
 						name: 'favorites_more_screen'
 						id: favorites_more_screen
+						canvas.before:
+							Color:
+								rgba: rgba('#310b38')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
+
+							Color:
+								rgba: rgba('#80358f')
+							Triangle:
+								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]	
 
 						
 						MDBoxLayout:
@@ -202,9 +269,10 @@
 							
 							MDToolbar:
 								id: favorites_more_toolbar
-								title: 'Ֆավորիտներ'
-								left_action_items: [["arrow-left", lambda x: app.favorites_back_button()]]
+								md_bg_color: .35, .105, .36, 1
 
+								title: 'Ֆավորիտներ'	
+								left_action_items: [["arrow-left", lambda x: app.favorites_back_button()]]
 
 							MDBoxLayout:
 								id: favorites_more_widget
@@ -219,25 +287,15 @@
 
 				MDGridLayout:
 
+				    md_bg_color: .128, .71, .31, .5
+
 					cols: 1
 
 					MDToolbar:
 						id: settings_home_toolbar
 						title: 'Կարգավորումներ'
+    					md_bg_color: .128, .71, .31, 1
 
-
-					MDBoxLayout:
-						orientation: 'horizontal'
-						MDTextField:
-							id: search_name
-							adaptive_height: True
-							font_name: app.font_name
-							hint_text: 'Search gesture by name'
-
-						MDIconButton:
-							icon: 'magnify'
-							on_release:
-								app.search_gesture_in_database(root.ids.search_name.text, app.LANGUAGE)
 					
 					MDRectangleFlatIconButton:
 						icon: "theme-light-dark"
@@ -245,27 +303,39 @@
 						pos_hint:{"top":1}
 						size_hint_x: 1
 						size_hint_y: .2
+						md_bg_color: ( '#6fbf67' )
+						text_color: ( '#1c2e1b' )
+						icon_color: ('1c2e1b')
+ 
 						font_name: app.font_name
 						on_release: app.change_theme(self)
 
-					Button:
-						text: 'Armenian'
-						size_hint: .2, .2
-						on_release: app.change_language("")
-					
-					Button:
-						text: 'Russian'
-						size_hint: .2, .2
-						on_release: app.change_language("ru_")
-
 										
-					Button:
-						text: 'English'
-						size_hint: .2, .2
-						on_release: app.change_language("en_")
+					BoxLayout:
+						orientation: 'horizontal'
+
+						pos_hint: {"center_x" : .5}
+
+
+						padding: 10
+						spacing: 10
+
+
+
+						MDIconButton:
+							icon: './arm.png'
+							on_release: app.change_language("")
+						
+						MDIconButton:
+							icon: './ru.png'
+							on_release: app.change_language("ru_")
+
+											
+						MDIconButton:
+							icon: './en.png'
+							on_release: app.change_language("en_")
+
 				
 
 
 RootWidget:
-
-				

@@ -15,7 +15,7 @@ import random, time
 from kivy.clock import Clock
 from kivymd.uix.label import MDLabel
 import os
-#from dulwich import porcelain
+from dulwich import porcelain
 
 
 
@@ -27,6 +27,8 @@ class FirstLevelCallBacks:
 
 
 	def search_gesture_in_database(self, gesture_name, language):
+
+		self.root.ids.search_name.text = ''
 		result = searchByName(gesture_name, language)
 		names = []
 		descriptions = []
@@ -288,9 +290,7 @@ class RootWidget(ScreenManager):
 class WelcomeScreen(MDApp):
 
 	def loader(self):
-		path = os.getcwd() + "/Images/"
-		os.mkdir(path)
-		#porcelain.clone("https://github.com/Arram512/Animations", os.getcwd() + "/Images/")
+		porcelain.clone("https://github.com/Arram512/Animations", os.getcwd() + "/Images/")
 		self.root.ids.button.text = 'Перезагрузи черт блять'
 	
 	def build(self):
@@ -379,6 +379,9 @@ class MainApp(MDApp, FirstLevelCallBacks):
 			'Orenq',
 			'Sport',
 			'Ashxarh',
+			'Kron',
+			'Mard',
+			'Tohmacar',
 
 
 			]
@@ -399,13 +402,12 @@ class MainApp(MDApp, FirstLevelCallBacks):
 			"Օրենք, իրավունք",
 			"Սպորտ, հանգիստ",
 			'Աշխարհ',
+			"Կրոն",
 			'Մարդ',
-			'Բարեկամություն',
-			'Ընտանիք',
+			'Ընտանիք, բարեկամություն',
 			'Բնություն',
 			'Տարածված արտահայտություններ',
 			"Էմոցյաներ, զգացմունքներ",
-			"Կրոն",
 			],
 
 			"ru_": [
@@ -423,13 +425,12 @@ class MainApp(MDApp, FirstLevelCallBacks):
 				'Закон, право',
 				'Спорт, отдых',
 				'Мир. Государства. Города',
+				'Религия, вера',
 				'Человек',
-				'Родство',
-				'Семья',
+				'Семья, род',
 				'Природа',
 				'Распорстроненные выражения',
 				'Эмоции, чувства',
-				'Религия, вера',
 			],
 
 			"en_": [
@@ -447,13 +448,12 @@ class MainApp(MDApp, FirstLevelCallBacks):
 				'Law, right',
 				'Sport, recreation',
 				'Peace. States. Cities',
+				'Religion, faith',
 				'Human',
-				'Kinship',
 				'Family',
 				'Nature',
 				'Expanded Expressions',
 				'Emotions, feelings',
-				'Religion, faith',
 			]
 
 			}

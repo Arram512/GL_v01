@@ -71,6 +71,7 @@
 			size_hint_y: 1
 			id: button_1
 			font_size: 60
+			md_bg_color: .148, .28, .54, 1
 			font_name: app.font_name
 			text: root.options[0]
 			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
@@ -80,6 +81,7 @@
 			size_hint_y: 1
 			id: button_2
 			font_size: 60
+			md_bg_color: .148, .28, .54, 1
 			font_name: app.font_name
 			text: root.options[1]
 			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
@@ -90,6 +92,7 @@
 			size_hint_y: 1
 			id: button_3
 			font_size: 60
+			md_bg_color: .148, .28, .54, 1
 			font_name: app.font_name
 			text: root.options[2]
 			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
@@ -99,6 +102,7 @@
 			size_hint_y: 1
 			id: button_4
 			font_size: 60
+			md_bg_color: .148, .28, .54, 1
 			font_name: app.font_name
 			text: root.options[3]
 			on_release: app.check_answer(self, root.true_answer, root, root.test_names, root.test_sources)
@@ -107,6 +111,7 @@
 		font_name: app.font_name
 		text: app.next_button[app.LANGUAGE]
 		font_size: 55
+		md_bg_color: .148, .28, .54, 1
 		on_release: app.test_callback(self, root.test_sources, root.test_names, root.iterator + 1, root.title)
 		size_hint_y: .2
 		size_hint_x: 1

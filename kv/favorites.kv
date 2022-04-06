@@ -22,14 +22,16 @@
 
 	MDBoxLayout:
 		orientation: 'horizontal'
-
 		size_hint_y: .3
+
+
 
 		MDRectangleFlatButton:
 			id: favorite_previouse_button
 			font_name: app.font_name
 			text: app.previouse_button[app.LANGUAGE]
 			font_size: 55
+			md_bg_color: ( '#310b38' )
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator - 1)
 			size_hint_x: .5
 
@@ -39,6 +41,7 @@
 			font_name: app.font_name
 			text: app.next_button[app.LANGUAGE]
 			font_size: 55
+			md_bg_color: ( '#310b38' )
 			on_press: app.favorite_callback(root.sources, root.names, root.descriptions, root,  root.iterator + 1)
 			size_hint_x: .5
 
@@ -48,6 +51,7 @@
 		font_name: app.font_name
 		text: app.drop_favorite[app.LANGUAGE]
 		font_size: 55
+		md_bg_color: ( '#310b38' )
 		on_release: app.delete_from_favorite(root.name)
 		size_hint_x: 1
 		pos_hint: {'center_x': .5}

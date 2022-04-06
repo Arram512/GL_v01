@@ -28,6 +28,7 @@
 			id: lesson_previouse_button
 			font_name: app.font_name
 			icon: ''
+			md_bg_color: ( '#310b38' )
 			text: app.previouse_button[app.LANGUAGE]
 			font_size: 60
 			on_release: app.lesson_callback(self, root.lesson_sources, root.lesson_descriptions, root.lesson_names, root , root.iterator - 1, root.title)
@@ -37,6 +38,7 @@
 			id: lesson_next_button
 			font_name: app.font_name
 			icon: ''
+			md_bg_color: ( '#310b38' )
 			text: app.next_button[app.LANGUAGE]
 			font_size: 60
 			on_release: app.lesson_callback(self,root.lesson_sources, root.lesson_descriptions, root.lesson_names, root,  root.iterator + 1, root.title)
@@ -47,6 +49,7 @@
 		font_name: app.font_name
 		text: app.add_favorite[app.LANGUAGE]
 		font_size: 60
+		md_bg_color: ( '#310b38' )
 		on_release: app.add_to_favorite(root)
 		size_hint_x: 1
 		pos_hint: {'center_x': .5}
@@ -57,6 +60,7 @@
 	size_hint_y: None
 	height: self.minimum_height
 	spacing: 20
+
 
 
 <LessonsMoreWidget>:
