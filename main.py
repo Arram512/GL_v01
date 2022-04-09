@@ -14,7 +14,8 @@ from functools import partial
 import random, time
 from kivy.clock import Clock
 from kivymd.uix.label import MDLabel
-import os
+import os, string 
+from hangman import HangmanApp, MyRoot
 #from dulwich import porcelain
 
 
@@ -327,6 +328,13 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 
 
+	def restart(self):
+		self.root.clear_widgets()
+		self.stop()
+		return HangmanApp().run()
+
+
+
 
 	def change_language(self, language):
 
@@ -336,6 +344,10 @@ class MainApp(MDApp, FirstLevelCallBacks):
 		self.LANGUAGE = language
 
 		self.on_start()
+
+
+
+
 
 
 	def on_start(self):
