@@ -19,6 +19,8 @@ SOURCES = get_words()[1]
 class ButtonsLayout(GridLayout):
     INSTANCES = []
 
+    keyboard = ['Ա', "Բ", "Գ", "Դ", "Ե", "Զ", "Է", "Ը", "Թ", "Ժ", "Ի", "Լ", "Խ", "Ծ", "Կ", "Հ", "Ձ", "Ղ", "Ճ", "Մ", "Յ", "Ն", "Շ", "Ո", "Չ", "Պ", "Ջ", "Ռ", "Ս", "Վ", "Տ", "Ր", "Ց", "Ւ", "Փ", "Ք", "Եվ","Օ", "Ֆ","-", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
     def __init__(self, **kwargs):
         super(ButtonsLayout, self).__init__(**kwargs)
 
@@ -26,7 +28,7 @@ class ButtonsLayout(GridLayout):
         ButtonsLayout.INSTANCES.append(self)
 
         # Configuring the layout.
-        self.rows = 3
+        self.rows = 4
         self.cols = 13
 
         # Creating a dictionary for buttons.
@@ -37,12 +39,12 @@ class ButtonsLayout(GridLayout):
 
     def create_buttons(self):
         # Creating buttons for all the alphabets.
-        for alphabet in ['Ա', "Բ", "Գ", "Դ", "Ե", "Զ", "Է", "Ը", "Թ", "Ժ", "Ի", "Լ", "Խ", "Ծ", "Կ", "Հ", "Ձ", "Ղ", "Ճ", "Մ", "Յ", "Ն", "Շ", "Ո", "Չ", "Պ", "Ջ", "Ռ", "Ս", "Վ", "Տ", "Ր", "Ց", "Ւ", "Փ", "Ք", "Եվ","Օ", "Ֆ"]:
+        for alphabet in self.keyboard:
             # Creating button.
             button = Button(
                 text=alphabet,
                 font_name="FreeSans.ttf",
-                font_size=24,
+                font_size=50,
             )
 
             # Adding button to the layout.
@@ -59,12 +61,17 @@ class MyRoot(BoxLayout):
     HANGMAN_IMG = StringProperty()
     GAME_MSG = StringProperty()
     WORD_DISPLAY = StringProperty()
+    SOURCE = StringProperty()
+
+
+
 
     def __init__(self, **kwargs):
         super(MyRoot, self).__init__(**kwargs)
 
         # RANDOM_WORD for the word to be guessed.
         self.RANDOM_WORD = ""
+
 
         # List of all the guessed alphabets.
         self.GUESSES = []
@@ -138,7 +145,13 @@ class MyRoot(BoxLayout):
 
     def start_game(self):
         # Getting a Random Word.
-        self.RANDOM_WORD = random.choice(WORDS).upper()
+
+        randint = random.randint(0, len(WORDS))
+
+        self.RANDOM_WORD = WORDS[randint].upper()
+
+        self.SOURCE = SOURCES[randint]
+        print(self.SOURCE)
 
         print(self.RANDOM_WORD)
 
