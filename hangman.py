@@ -50,7 +50,6 @@ class ButtonsLayout(GridLayout):
             # Adding button to the layout.
             self.add_widget(button)
 
-            print(alphabet)
 
             # Adding button to the dictionary.
             self.buttons[alphabet] = button
@@ -151,9 +150,6 @@ class MyRoot(BoxLayout):
         self.RANDOM_WORD = WORDS[randint].upper()
 
         self.SOURCE = SOURCES[randint]
-        print(self.SOURCE)
-
-        print(self.RANDOM_WORD)
 
         # Clearing the Guesses.
         self.GUESSES.clear()

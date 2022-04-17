@@ -22,25 +22,6 @@
 					id: lessons_screens_manager
 
 					Screen:   	
-					
-
-						canvas.before:
-							Color:
-								rgba: rgba('#80358f')
-							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
-
-							Color:
-								rgba: rgba('#310b38')
-							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]							#Lessons first screen
-						
-						
-
-
-
-
-
 
 						name: 'lessons_home_screen'
 						id: lessons_home_screen
@@ -49,6 +30,17 @@
 
 
 							orientation: 'vertical'
+
+							
+							canvas.before:
+								Color:
+									rgba: (1, 1, 1, 1)
+								Rectangle:
+									source:'lessons_background.jpg'
+									size: root.width, root.height
+									pos: self.pos
+
+
 							MDToolbar:
 								md_bg_color: .35, .105, .36, 1
 
@@ -83,16 +75,14 @@
 
 						name: 'lessons_more_screen'
 						id: lessons_more_screen
+													
 						canvas.before:
 							Color:
-								rgba: rgba('#310b38')
-							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
-
-							Color:
-								rgba: rgba('#80358f')
-							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]	
+								rgba: (1, 1, 1, 1)
+							Rectangle:
+								source:'lessons_background.jpg'
+								size: root.width, root.height
+								pos: self.pos
 
 	
 
@@ -124,16 +114,14 @@
 						name: 'tests_home_screen'
 						id: tests_home_screen
 
+													
 						canvas.before:
 							Color:
-								rgba: rgba('#435dc4')
-							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
-
-							Color:
-								rgba: rgba('#102473')
-							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]	
+								rgba: (1, 1, 1, 1)
+							Rectangle:
+								source:'tests_background.jpg'
+								size: root.width, root.height
+								pos: self.pos
 
 						MDBoxLayout:
 							orientation: 'vertical'
@@ -217,16 +205,14 @@
 
 						name: 'favorites_home_screen'
 						id: favorites_home_screen
+							
 						canvas.before:
 							Color:
-								rgba: rgba('#9e6231')
-							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1] - (.4*self.size[1])]						#Lessons first screen
-
-							Color:
-								rgba: rgba('#c46c1f')
-							Triangle:
-								points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1] - (.4*self.size[1])]
+								rgba: (1, 1, 1, 1)
+							Rectangle:
+								source:'favorites_background.jpg'
+								size: root.width, root.height
+								pos: self.pos
 
 						
 
@@ -335,9 +321,6 @@
 							icon: './en.png'
 							on_release: app.change_language("en_")
 
-						Button:
-							text: 'game'
-							on_release: app.restart()
 
 				
 

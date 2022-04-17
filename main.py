@@ -330,8 +330,7 @@ class MainApp(MDApp, FirstLevelCallBacks):
 
 	def restart(self):
 		self.root.clear_widgets()
-		self.stop()
-		return HangmanApp().run()
+		self.root.add_widget(MyRoot())
 
 
 
@@ -479,11 +478,11 @@ class MainApp(MDApp, FirstLevelCallBacks):
 				descriptions = get_description(parts[item], self.LANGUAGE)
 				names = get_name(parts[item], self.LANGUAGE)
 
-				lesson_1_button = MDRectangleFlatIconButton(text = part_names[self.LANGUAGE][item], icon = '', size_hint = (1, 1), font_name = self.font_name)
+				lesson_1_button = MDRectangleFlatIconButton(text = part_names[self.LANGUAGE][item], icon = '', size_hint = (1, 1), font_name = self.font_name, md_bg_color = (255, 255, 206, 1), text_color = (0, 0, 0, 1))
 				lesson_1_button.bind(on_press = partial(self.lesson_callback, lesson_sources =  sources, lesson_items = descriptions, lesson_names = names, title = lesson_1_button.text))
 				self.root.ids.lessons_home_widget.add_widget(lesson_1_button)
 
-				test_1_button = MDRectangleFlatIconButton(text = part_names[self.LANGUAGE][item], icon = '' ,size_hint = (1, 1), font_name = self.font_name)
+				test_1_button = MDRectangleFlatIconButton(text = part_names[self.LANGUAGE][item], icon = '' ,size_hint = (1, 1), font_name = self.font_name, md_bg_color = (255, 255, 206, 1), text_color = (0, 0, 0, 1))
 				test_1_button.bind(on_press = partial(self.test_callback, lesson_sources = sources, lesson_items = names, title = test_1_button.text))
 				self.root.ids.tests_home_widget.add_widget(test_1_button)
 			except:
